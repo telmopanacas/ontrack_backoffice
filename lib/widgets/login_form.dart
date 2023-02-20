@@ -4,6 +4,8 @@ import 'package:ontrack_backoffice/pages/forgot_password.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/custom_text.dart';
 
+import '../controllers/login_form_controllers.dart';
+
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
 
@@ -52,6 +54,8 @@ class LoginForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 132, vertical: 20)
             ),
             onPressed: () {
+              print(emailController.text);
+              print(passwordController.text);
             },
             child: Text(
                 'Login',
@@ -87,6 +91,7 @@ class LoginForm extends StatelessWidget {
               height: 40,
               width: 300,
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15)
@@ -125,6 +130,8 @@ class LoginForm extends StatelessWidget {
             height: 40,
             width: 300,
             child: TextField(
+              obscureText: true,
+              controller: passwordController,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(15)
