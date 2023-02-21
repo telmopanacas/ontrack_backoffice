@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ontrack_backoffice/pages/forgot_password.dart';
+import 'package:ontrack_backoffice/pages/home.dart';
 import 'package:ontrack_backoffice/pages/login_page.dart';
 
 void main() {
@@ -11,10 +13,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'OnTrack Backoffice',
-      home: LoginPage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => LoginPage(),
+        '/forgot_password': (context) => ForgotPasswordPage(),
+        '/home': (context) => Home(),
+      }
     );
   }
 }

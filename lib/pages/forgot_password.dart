@@ -5,8 +5,10 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Forgot Password Page'),
+    return Scaffold(
+      body: const Center(
+        child: Text('Forgot Password Page', style: TextStyle(fontSize: 24, color: Colors.black), textAlign: TextAlign.center),
+      ),
     );
   }
 }

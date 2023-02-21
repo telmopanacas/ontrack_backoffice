@@ -47,15 +47,18 @@ class LoginForm extends StatelessWidget {
           SizedBox(height: 30),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: teste,
+              backgroundColor: teste,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15)
               ),
               padding: EdgeInsets.symmetric(horizontal: 132, vertical: 20)
             ),
             onPressed: () {
+              //TODO: implement login
               print(emailController.text);
               print(passwordController.text);
+
+              Navigator.pushReplacementNamed(context, '/home');
             },
             child: Text(
                 'Login',
@@ -163,10 +166,7 @@ class ForgotPassword extends StatelessWidget {
       child: GestureDetector(
         onTap: () {
           // Implemente aqui a ação que deseja executar ao clicar no texto
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
-          );
+          Navigator.pushNamed(context, '/forgot_password');
         },
         child: Align(
           alignment: Alignment.centerRight,
