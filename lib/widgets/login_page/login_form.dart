@@ -4,7 +4,7 @@ import 'package:ontrack_backoffice/pages/forgot_password.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/custom_text.dart';
 
-import '../controllers/login_form_controllers.dart';
+import '../../controllers/login_form_controllers.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class LoginForm extends StatelessWidget {
           Align(
             alignment: Alignment.centerLeft,
             child: CustomText(
-                text: 'Bem Vindo,',
+                text: 'Bem-Vindo,',
                 size: 30,
                 color: Colors.black,
                 weight: FontWeight.bold,

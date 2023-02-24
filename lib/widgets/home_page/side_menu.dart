@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:ontrack_backoffice/controllers/login_form_controllers.dart';
 
-import 'custom_text.dart';
+import '../custom_text.dart';
 
 class SideMenu extends StatelessWidget {
   const SideMenu({Key? key}) : super(key: key);
