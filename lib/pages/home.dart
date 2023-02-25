@@ -4,7 +4,6 @@ import '../helpers/responsiveness.dart';
 import '../static/colors.dart';
 import '../widgets/home_page/large_screen/home.dart';
 import '../widgets/home_page/medium_screen/home.dart';
-import '../widgets/home_page/side_menu.dart';
 import '../widgets/home_page/small_screen/home.dart';
 
 class Home extends StatelessWidget {
