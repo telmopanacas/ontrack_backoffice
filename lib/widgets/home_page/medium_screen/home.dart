@@ -31,35 +31,43 @@ class MediumScreen extends StatelessWidget {
             child: Column(
               children: [
                 // Profile
-                buildProflie(),
+                buildProfile(),
                 // Menu
-                Expanded(
-                    child: Container(
-                      //color: Colors.green[300],
-                      child: ListView(
-                        children: sideMenuItems.map((itemName) => MenuItem(
-                            itemName: itemName,
-                            onTap: () {
-                              print(itemName);
-                              if(itemName == AutenticacaoPageRoute){
-                                //TODO: Implementar logout
-                              }
-                              if(!menuController.isActive(itemName)){
-                                menuController.changeActiveItemTo(itemName);
-                                //TODO: Implementar navegação
-                              }
-                            },
-                        )).toList(),
-                      ),
-
-                    )
-                )
+                buildMenu()
               ]
             ),
           );
   }
 
-  Container buildProflie() {
+  Expanded buildMenu() {
+    return Expanded(
+        child: Container(
+          //color: Colors.green[300],
+          child: ListView(
+            // Vai buscar os nomes das rotas definidas em routing/routes.dart e cria um MenuItem para cada um
+            children: sideMenuItems.map((itemName) => MenuItem(
+                itemName: itemName,
+                onTap: () {
+                  print(itemName);
+                  // Se o item clicado for o de logout, então faz logout e redireciona para a página de login
+                  if(itemName == AutenticacaoPageRoute){
+                    //TODO: Implementar logout
+                  }
+                  // Se o item clicado não for o de logout, então muda o item ativo para o clicado e navega para a página correspondente
+                  else
+                  if(!menuController.isActive(itemName)){
+                    menuController.changeActiveItemTo(itemName);
+                    //TODO: Implementar navegação
+                  }
+                },
+            )).toList(),
+          ),
+
+        )
+    );
+  }
+
+  Container buildProfile() {
     return Container(
       height: 130,
       //color: Colors.green[200],
@@ -92,24 +100,3 @@ class MediumScreen extends StatelessWidget {
   }
 }
 
-class SideMenuItem extends StatelessWidget {
-  final String itemName;
-  const SideMenuItem({
-    super.key, required this.itemName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () {},
-      onHover: (value) {
-        print(itemName);
-      },
-      child: ListTile(
-        leading: Icon(Icons.home),
-        title: Text(itemName),
-        hoverColor: Colors.grey.withOpacity(0.3),
-      ),
-    );
-  }
-}
