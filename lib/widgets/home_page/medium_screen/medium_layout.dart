@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/controllers/controllers.dart';
+import 'package:ontrack_backoffice/helpers/local_navigator.dart';
 import 'package:ontrack_backoffice/routing/routes.dart';
 import 'package:ontrack_backoffice/widgets/home_page/medium_screen/side_menu_item.dart';
 
@@ -15,9 +16,7 @@ class MediumScreen extends StatelessWidget {
             buildSideMenu(),
             // Main Content
             Expanded(
-              child: Container(
-                color: Colors.orange[100],
-              ),
+              child: localNavigator()
             ),
           ],
         )
@@ -58,6 +57,7 @@ class MediumScreen extends StatelessWidget {
                   if(!menuController.isActive(itemName)){
                     menuController.changeActiveItemTo(itemName);
                     //TODO: Implementar navegação
+                    navigationController.navigateTo(itemName);
                   }
                 },
             )).toList(),
