@@ -9,19 +9,7 @@ class MediumScreen extends StatelessWidget {
         body: Row(
           children: [
             // Side Menu
-            Container(
-              width: 250,
-              color: Colors.green[100],
-              child: Column(
-                children: [
-                  Container(
-                    height: 170,
-                    color: Colors.green[200],
-                  ),
-                  Expanded(child: Container(color: Colors.green[300]))
-                ]
-              ),
-            ),
+            SideMenu(),
             // Main Content
             Expanded(
               child: Container(
@@ -30,6 +18,36 @@ class MediumScreen extends StatelessWidget {
             ),
           ],
         )
+    );
+  }
+}
+
+class SideMenu extends StatelessWidget {
+  const SideMenu({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 250,
+      color: Colors.green[100],
+      child: Column(
+        children: [
+          // Profile
+          Container(
+            height: 170,
+            color: Colors.green[200],
+            child: Row(
+              children: [
+
+              ]
+            ),
+          ),
+          // Menu
+          Expanded(child: Container(color: Colors.green[300]))
+        ]
+      ),
     );
   }
 }
