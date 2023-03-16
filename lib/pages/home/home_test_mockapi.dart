@@ -9,7 +9,6 @@ class HomePageAPI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    getUCByProfID();
     return Container(
       color: background,
       child: Center(
@@ -23,33 +22,27 @@ class HomePageAPI extends StatelessWidget {
                 // Container de UCs
                 Row(
                   children: [
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Container(
-                        constraints: BoxConstraints(
-
-                          maxWidth: MediaQuery.of(context).size.width * 0.6,
-                        ),
-                        color: Colors.orange[200],
-                        width: MediaQuery.of(context).size.width * 0.6,
-                        height: MediaQuery.of(context).size.height * 0.4,
-                        child: FutureBuilder(
-                          future: getUCByProfID(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Wrap(
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  children: snapshot.data as List<Widget>,
-                                ),
-                              );
-                            } else {
-                              return Center(child: CircularProgressIndicator());
-                            }
-                          },
-                        ),
+                    Container(
+                      color: Colors.orange[200],
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      height: MediaQuery.of(context).size.height * 0.4,
+                      child: FutureBuilder(
+                        future: getUCByProfID(),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Wrap(
+                                spacing: 15,
+                                runSpacing: 15,
+                                alignment: WrapAlignment.start,
+                                children: snapshot.data as List<Widget>,
+                              ),
+                            );
+                          } else {
+                            return Center(child: CircularProgressIndicator());
+                          }
+                        },
                       ),
                     ),
                     Expanded(
@@ -93,7 +86,9 @@ class HomePageAPI extends StatelessWidget {
   }
 
   Future<List<Widget>> getUCByProfID() async {
+    // Id do professor
     var id = 1;
+
     var response = await http.get(Uri.parse('https://6411e71a6e3ca31753014d37.mockapi.io/professores/$id/unidades_curriculares'));
     if (response.statusCode == 200) {
       var resultados = jsonDecode(response.body) as List;
@@ -107,12 +102,9 @@ class HomePageAPI extends StatelessWidget {
 
   Widget getUCWidgetFromJSON(Map<String, dynamic> json) {
     return Container(
+      color: Colors.deepOrange,
       height: 150,
       width: 150,
-      decoration: BoxDecoration(
-        color: Colors.grey[400],
-        borderRadius: BorderRadius.circular(10),
-      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
