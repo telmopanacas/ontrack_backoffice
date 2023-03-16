@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/controllers/controllers.dart';
+import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
 import 'package:ontrack_backoffice/helpers/local_navigator.dart';
 import 'package:ontrack_backoffice/routing/routes.dart';
 import 'package:ontrack_backoffice/widgets/home_page/medium_screen/side_menu_item.dart';
