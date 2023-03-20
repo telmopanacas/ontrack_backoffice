@@ -27,7 +27,6 @@ class MediumScreen extends StatelessWidget {
   Container buildSideMenu() {
     return Container(
             width: 250,
-            //color: Colors.green[100],
             child: Column(
               children: [
                 // Profile
@@ -42,7 +41,7 @@ class MediumScreen extends StatelessWidget {
   Expanded buildMenu() {
     return Expanded(
         child: Container(
-          //color: Colors.green[300],
+
           child: ListView(
             // Vai buscar os nomes das rotas definidas em routing/routes.dart e cria um MenuItem para cada um
             children: sideMenuItems.map((itemName) => MenuItem(
@@ -71,7 +70,6 @@ class MediumScreen extends StatelessWidget {
   Container buildProfile() {
     return Container(
       height: 130,
-      //color: Colors.green[200],
       child: Row(
         children: [
           SizedBox(width: 20),
@@ -79,7 +77,6 @@ class MediumScreen extends StatelessWidget {
           Container(
             width: 70,
             height: 70,
-            //color: Colors.green[300],
             child: CircleAvatar(
               backgroundImage: Image.asset('assets/images/chun-li.png').image
             ),
