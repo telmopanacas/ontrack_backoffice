@@ -27,6 +27,7 @@ class HomePageAPI extends StatelessWidget {
                     Container(
                       width: MediaQuery.of(context).size.width * 0.6,
                       height: MediaQuery.of(context).size.height * 0.4,
+
                       child: FutureBuilder(
                         future: getUCByProfID(),
                         builder: (context, snapshot) {
@@ -46,6 +47,7 @@ class HomePageAPI extends StatelessWidget {
                         },
                       ),
                     ),
+
                     Expanded(
                         child: Container(
                           //color: Colors.red[600],
@@ -161,7 +163,16 @@ class HomePageAPI extends StatelessWidget {
                 color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
               ),
-              child: Center(child: Text(json['name'], style: TextStyle(fontWeight: FontWeight.bold),)),
+              child: Center(
+                  child: Text(
+                    json['name'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+              ),
             ),
             Container(
               width: 150,
@@ -183,7 +194,7 @@ class HomePageAPI extends StatelessWidget {
                     SizedBox(height: 10,),
                     RichText(
                       text: TextSpan(
-                        text: 'Ano: ',
+                        text: 'Ano Letivo: ',
                         style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                         children: <TextSpan>[
                           TextSpan(text: json['ano'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
