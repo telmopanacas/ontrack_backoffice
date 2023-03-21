@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/controllers/controllers.dart';
+import 'package:ontrack_backoffice/controllers/login_form_controllers.dart';
 import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
 import 'package:ontrack_backoffice/helpers/local_navigator.dart';
 import 'package:ontrack_backoffice/routing/routes.dart';
@@ -89,7 +90,7 @@ class MediumScreen extends StatelessWidget {
             children: [
               Text('Bem-Vindo,', style: TextStyle(fontSize: 15)),
               Text('Nome do Professor',style: TextStyle(fontSize: 13)),
-              Text('Email do Professor',style: TextStyle(fontSize: 13)),
+              Text('${emailController.text.isNotEmpty ? emailController.text : 'Email do professor' }',style: TextStyle(fontSize: 13)),
             ],
           )
         ],
