@@ -107,15 +107,31 @@ Widget getEventoWidgetFromJSON(Map<String, dynamic> json){
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text('${json['name']}',
-                  style: TextStyle(overflow: TextOverflow.ellipsis),
+                  style: TextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Tipo: ${json['tipo']}'),
-                Text('Data: ${json['data_realizacao']}'),
+                Row(
+                  children: [
+                    Icon(Icons.class_outlined, size: 15,),
+                    SizedBox(width: 5,),
+                    Text('${json['tipo']}', style: TextStyle(overflow: TextOverflow.ellipsis),),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Icon(Icons.insert_invitation_outlined, size: 15,),
+                    SizedBox(width: 5,),
+                    Text('${json['data_realizacao']}', style: TextStyle(overflow: TextOverflow.ellipsis),),
+                  ],
+                ),
               ],
             )
           ],

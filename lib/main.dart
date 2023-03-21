@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ontrack_backoffice/controllers/menu_controller.dart';
 import 'package:ontrack_backoffice/pages/forgot_password.dart';
 import 'package:ontrack_backoffice/pages/layout.dart';
@@ -37,8 +38,16 @@ class MyApp extends StatelessWidget {
             TargetPlatform.windows: FadeUpwardsPageTransitionsBuilder(),
           },
         ),
-
       ),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('pt'), // Spanish
+      ],
     );
   }
 }

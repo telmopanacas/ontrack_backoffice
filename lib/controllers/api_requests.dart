@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../helpers/api_data_helper.dart';
+import '../widgets/api_data_widgets/api_data_helper.dart';
 
 Future<List<Widget>> getUCByProfID() async {
   // Id do professor

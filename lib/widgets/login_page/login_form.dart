@@ -55,8 +55,8 @@ class LoginForm extends StatelessWidget {
             ),
             onPressed: () {
               //TODO: implement login
-              print(emailController.text);
-              print(passwordController.text);
+              //print(emailController.text);
+              //print(passwordController.text);
 
               Navigator.pushReplacementNamed(context, '/home');
             },
