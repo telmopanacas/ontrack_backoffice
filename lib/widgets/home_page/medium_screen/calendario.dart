@@ -22,7 +22,7 @@ class _CalendarioState extends State<Calendario> {
    */
   bool _detalhesIsVisible = false;
   int _lastDaySelected = 0;
-  String _diaSelecionado = '';
+  List<int> selectedDays = [];
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,8 @@ class _CalendarioState extends State<Calendario> {
           ),
       );
   }
-  //height: MediaQuery.of(context).size.height * 0.34,
+
+
   Container buildCalendario(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
@@ -186,37 +187,7 @@ class _CalendarioState extends State<Calendario> {
     List<Widget> calendarDays = [];
     for (int i = 1; i <= getNumberOfDaysMonth(); i++) {
       calendarDays.add(
-        InkWell(
-          onTap: () {
-            // Vai mostrar o container dos detalhes do dia do calendário
-            if(_lastDaySelected != i && _detalhesIsVisible == true){
-              setState(() {
-                _lastDaySelected = i;
-                // chamar a função que vai buscar os dados do dia selecionado
-                _diaSelecionado = 'Dia $i';
-              });
-            }
-            else{
-              setState(() {
-                _lastDaySelected = i;
-                _detalhesIsVisible = !_detalhesIsVisible;
-                // chamar a função que vai buscar os dados do dia selecionado
-                _diaSelecionado = 'Dia $i';
-              });
-            }
-          },
-          child: Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(10),
-            ),
-            child: Center(
-                child: Text(i.toString(), style: TextStyle(fontSize: 20)),
-            ),
-          ),
-        ),
+        diaCalendario(i, selectedDays),
       );
     }
     return calendarDays;
@@ -264,6 +235,50 @@ class _CalendarioState extends State<Calendario> {
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(child: Text(json['name'])),
+    );
+  }
+  
+  Widget diaCalendario(int i, List<int> selectedDays) {
+    bool selected = selectedDays.contains(i);
+    return InkWell(
+      onTap: () {
+        // Vai mostrar o container dos detalhes do dia do calendário
+        if(_lastDaySelected != i && _detalhesIsVisible == true){
+          setState(() {
+            _lastDaySelected = i;
+            // chamar a função que vai buscar os dados do dia selecionado
+            selectedDays.clear();
+            if (selected) {
+              selectedDays.remove(i);
+            } else {
+              selectedDays.add(i);
+            }
+          });
+        }
+        else{
+          setState(() {
+            _lastDaySelected = i;
+            _detalhesIsVisible = !_detalhesIsVisible;
+            // chamar a função que vai buscar os dados do dia selecionado
+            if (selected) {
+              selectedDays.remove(i);
+            } else {
+              selectedDays.add(i);
+            }
+          });
+        }
+      },
+      child: Container(
+        height: 40,
+        width: 40,
+        decoration: BoxDecoration(
+          color: selected ? loginButtonColor : Colors.grey[300],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Center(
+          child: Text(i.toString(), style: TextStyle(fontSize: 20, color: selected ? Colors.white : Colors.black),),
+        ),
+      ),
     );
   }
 }
