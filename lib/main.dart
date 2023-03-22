@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ontrack_backoffice/controllers/menu_controller.dart';
-import 'package:ontrack_backoffice/pages/forgot_password.dart';
+import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
 import 'package:ontrack_backoffice/pages/layout.dart';
-import 'package:ontrack_backoffice/pages/login_page.dart';
+
 import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
+import 'package:ontrack_backoffice/pages/login/login_page.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 void main() {

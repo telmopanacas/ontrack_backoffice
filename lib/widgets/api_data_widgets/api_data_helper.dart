@@ -84,7 +84,7 @@ Widget getUCWidgetFromJSON(Map<String, dynamic> json) {
   );
 }
 
-Widget getEventoWidgetFromJSON(Map<String, dynamic> json){
+Widget getEventoWidgetFromJSON(Map<String, dynamic> json, Color? corCartao){
   return InkWell(
     onTap: () {
       //TODO - Ir para os detalhes do evento
@@ -92,7 +92,7 @@ Widget getEventoWidgetFromJSON(Map<String, dynamic> json){
     },
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.8),
+        color: corCartao!.withOpacity(0.8),
         borderRadius: BorderRadius.circular(5),
       ),
       width: double.infinity,

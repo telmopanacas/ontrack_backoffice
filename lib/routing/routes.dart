@@ -1,6 +1,6 @@
 const HomePageRoute = "Home";
 const UnidadesCurricularesPageRoute = "Unidades Curriculares";
-const EventosDeAvaliacaoPageRoute = "Eventos de Avaliação";
+const EventosDeAvaliacaoPageRoute = "Avaliações";
 const NotificacoesPageRoute = "Notificações";
 const AutenticacaoPageRoute = "Log out";
 

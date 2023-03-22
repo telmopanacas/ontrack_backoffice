@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:ontrack_backoffice/pages/forgot_password.dart';
+import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/custom_text.dart';
 

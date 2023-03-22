@@ -27,7 +27,7 @@ Future<List<Widget>> getEventosProfID() async {
   var response = await http.get(Uri.parse('https://6419c06ec152063412cb0109.mockapi.io/professores/$id/evento_avaliacao'));
   if (response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
-    var jsonResponse = resultados.map((evento) => getEventoWidgetFromJSON(evento)).toList();
+    var jsonResponse = resultados.map((evento) => getEventoWidgetFromJSON(evento, Colors.white)).toList();
     return jsonResponse;
   } else {
     print('Request failed with status: ${response.statusCode}.');

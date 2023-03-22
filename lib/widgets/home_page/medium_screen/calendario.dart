@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
+import 'package:ontrack_backoffice/widgets/api_data_widgets/api_data_helper.dart';
 
 class Calendario extends StatefulWidget {
   const Calendario({Key? key}) : super(key: key);
@@ -115,7 +116,7 @@ class _CalendarioState extends State<Calendario> {
                           ),
                           height: 40,
                           width: double.infinity,
-                          child: Center(child: Text('Eventos de Avaliação do dia ${_lastDaySelected}', style: TextStyle(color: Colors.white, fontSize: 17),))
+                          child: Center(child: Text('Avaliações do dia ${_lastDaySelected}', style: TextStyle(color: Colors.white, fontSize: 17),))
                       )
                   )
                 ]
@@ -194,14 +195,16 @@ class _CalendarioState extends State<Calendario> {
   }
 
   int getNumberOfDaysMonth(){
-
+    int year = DateTime.now().year;
     final month = DateTime.now().month.toString();
 
     if(month =='1' || month =='3' || month =='5' || month =='7' || month =='8' || month =='10' || month =='12'){
       return 31;
     }else if(month =='4' || month =='6' || month =='9' || month =='11'){
       return 30;
-    }else{
+    }else if((year % 4 == 0 && year % 100 != 0) || year % 400 == 0){
+      return 29;
+    } else {
       return 28;
     }
   }
@@ -216,7 +219,7 @@ class _CalendarioState extends State<Calendario> {
       var resultados = jsonDecode(response.body) as List;
       resultados.map((evento)  {
         if(evento['data_realizacao'] == DateFormat('dd/MM/yyyy').format(DateTime(DateTime.now().year, DateTime.now().month, _lastDaySelected))){
-          output.add(getWidgetEventoDia(evento));
+          output.add(getEventoWidgetFromJSON(evento, Colors.grey[300]));
         }
       }).toList();
       return output;
@@ -231,7 +234,7 @@ class _CalendarioState extends State<Calendario> {
       height: 60,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: Colors.grey[300],
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(child: Text(json['name'])),
@@ -272,7 +275,7 @@ class _CalendarioState extends State<Calendario> {
         height: 40,
         width: 40,
         decoration: BoxDecoration(
-          color: selected ? loginButtonColor : Colors.grey[300],
+          color: selected ? loginButtonColor : Colors.grey[400],
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(

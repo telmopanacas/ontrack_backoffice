@@ -141,7 +141,7 @@ class HomePageAPI extends StatelessWidget {
                     ),
                     height: 40,
                     width: double.infinity,
-                      child: Center(child: Text('Eventos de Avaliação', style: TextStyle(color: Colors.white, fontSize: 17),))
+                      child: Center(child: Text('Próximas Avaliações', style: TextStyle(color: Colors.white, fontSize: 17),))
                   )
                 )
               ]
