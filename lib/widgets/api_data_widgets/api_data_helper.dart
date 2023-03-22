@@ -92,7 +92,7 @@ Widget getEventoWidgetFromJSON(Map<String, dynamic> json){
     },
     child: Container(
       decoration: BoxDecoration(
-        color: Colors.blueGrey[100]!.withOpacity(0.5),
+        color: Colors.white.withOpacity(0.8),
         borderRadius: BorderRadius.circular(5),
       ),
       width: double.infinity,
