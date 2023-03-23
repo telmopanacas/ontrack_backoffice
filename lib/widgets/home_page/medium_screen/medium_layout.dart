@@ -59,6 +59,7 @@ class MediumScreen extends StatelessWidget {
                     menuController.changeActiveItemTo(itemName);
                     //TODO: Implementar navegação
                     navigationController.navigateTo(itemName);
+
                   }
                 },
             )).toList(),

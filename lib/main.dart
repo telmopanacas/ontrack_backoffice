@@ -7,6 +7,7 @@ import 'package:ontrack_backoffice/pages/layout.dart';
 
 import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
 import 'package:ontrack_backoffice/pages/login/login_page.dart';
+import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_page.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 void main() {

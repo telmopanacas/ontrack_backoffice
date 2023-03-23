@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:ontrack_backoffice/controllers/controllers.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
-class DetalhesUnidadeCurricular extends StatefulWidget {
-  const DetalhesUnidadeCurricular({Key? key}) : super(key: key);
+class DetalhesUnidadeCurricularPage extends StatefulWidget {
+  const DetalhesUnidadeCurricularPage({Key? key}) : super(key: key);
 
   @override
-  State<DetalhesUnidadeCurricular> createState() => _DetalhesUnidadeCurricularState();
+  State<DetalhesUnidadeCurricularPage> createState() => _DetalhesUnidadeCurricularPageState();
 }
 
-class _DetalhesUnidadeCurricularState extends State<DetalhesUnidadeCurricular> {
+class _DetalhesUnidadeCurricularPageState extends State<DetalhesUnidadeCurricularPage> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       color: background,
       child: Center(
-        child: Text('Detalhes Unidades Curriculares Page'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Detalhes Unidades Curriculares Page'),
+            SizedBox(height: 20,),
+            ElevatedButton(
+              onPressed: () {
+               navigationController.goBack();
+              },
+              child: Text('Voltar'),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:ontrack_backoffice/controllers/controllers.dart';
+import 'package:ontrack_backoffice/routing/routes.dart';
+
 Widget getUCWidgetFromJSON(Map<String, dynamic> json) {
   return InkWell(
     onTap: () {
       //TODO - Ir para os detalhes da UC
       print('Carregou em UC: ${json['name']}');
-
+      navigationController.navigateToDetails(DetalhesUnidadeCurricularRoute, arguments: json['id']);
     },
     child: Container(
       height: 150,

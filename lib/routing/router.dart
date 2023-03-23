@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/pages/home/home_test_mockapi.dart';
+import 'package:ontrack_backoffice/pages/unidades_curriculares/detalhes_unidade_curricular.dart';
 import 'package:ontrack_backoffice/routing/routes.dart';
 import 'package:ontrack_backoffice/widgets/login_page/login_form.dart';
 
@@ -19,6 +20,8 @@ Route<dynamic> generateRoute(RouteSettings settings) {
       return _getPageRoute(EventosDeAvaliacaoPage());
     case NotificacoesPageRoute:
       return _getPageRoute(NotificacoesPage());
+    case DetalhesUnidadeCurricularRoute:
+      return _getPageRoute(DetalhesUnidadeCurricularPage());
     default:
       return _getPageRoute(HomePage());
   }
