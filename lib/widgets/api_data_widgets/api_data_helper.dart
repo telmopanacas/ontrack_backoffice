@@ -103,34 +103,48 @@ Widget getEventoWidgetFromJSON(Map<String, dynamic> json, Color? corCartao){
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Text('${json['name']}',
-                  style: TextStyle(
-                    overflow: TextOverflow.ellipsis,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+            //Usado Expanded para não dar overflow
+            Expanded(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  //Usado Expanded para não dar overflow
+                  Expanded(
+                    child: Text('${json['name']}',
+                      style: TextStyle(
+                        overflow: TextOverflow.ellipsis,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Icon(Icons.class_outlined, size: 15,),
-                    SizedBox(width: 5,),
-                    Text('${json['tipo']}', style: TextStyle(overflow: TextOverflow.ellipsis),),
-                  ],
+                //Usado Expanded para não dar overflow
+                Expanded(
+                  child: Row(
+                    children: [
+                      Icon(Icons.class_outlined, size: 15,),
+                      SizedBox(width: 5,),
+                      //Usado Expanded para não dar overflow
+                      Expanded(child: Text('${json['tipo']}', style: TextStyle(overflow: TextOverflow.ellipsis),)),
+                    ],
+                  ),
                 ),
-                Row(
-                  children: [
-                    Icon(Icons.insert_invitation_outlined, size: 15,),
-                    SizedBox(width: 5,),
-                    Text('${json['data_realizacao']}', style: TextStyle(overflow: TextOverflow.ellipsis),),
-                  ],
+                //Usado Expanded para não dar overflow
+                Expanded(
+                  child: Row(
+                    children: [
+                      Icon(Icons.insert_invitation_outlined, size: 15,),
+                      SizedBox(width: 5,),
+                      //Usado Expanded para não dar overflow
+                      Expanded(child: Text('${json['data_realizacao']}', style: TextStyle(overflow: TextOverflow.ellipsis),)),
+                    ],
+                  ),
                 ),
               ],
             )

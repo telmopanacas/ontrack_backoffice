@@ -135,43 +135,45 @@ class _CalendarioState extends State<Calendario> {
       ),
       height: MediaQuery.of(context).size.height * 0.34,
       width: MediaQuery.of(context).size.width * 0.6,
-      child: Column(
-        children: [
-          // Container com o titulo
-          Container(
-            height: 40,
-            width: MediaQuery.of(context).size.width * 0.6,
-            decoration: BoxDecoration(
-              //color: Colors.orange,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-            ),
-            child: Center(
-                child: Text(
-                  getMonth(),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                )
-            ),
-          ),
-          //Calendário
-          Container(
-              height: MediaQuery.of(context).size.height * 0.34 - 40,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Container com o titulo
+            Container(
+              height: 40,
               width: MediaQuery.of(context).size.width * 0.6,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+                //color: Colors.orange,
+                borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
               ),
-              child: GridView.count(
-                padding: EdgeInsets.all(10),
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                crossAxisCount: 10,
-                children: getCalendarDays(),
-              )
-          ),
-        ],
+              child: Center(
+                  child: Text(
+                    getMonth(),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  )
+              ),
+            ),
+            //Calendário
+            Container(
+                height: MediaQuery.of(context).size.height * 0.34 - 40,
+                width: MediaQuery.of(context).size.width * 0.6,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.vertical(bottom: Radius.circular(10)),
+                ),
+                child: GridView.count(
+                  padding: EdgeInsets.all(10),
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  crossAxisCount: 10,
+                  children: getCalendarDays(),
+                )
+            ),
+          ],
+        ),
       ),
     );
   }

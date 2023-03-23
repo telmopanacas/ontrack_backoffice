@@ -6,7 +6,7 @@ import 'package:ontrack_backoffice/widgets/login_page/login_form.dart';
 import '../pages/eventos_avaliacao/eventos_avaliacao.dart';
 import '../pages/home/home.dart';
 import '../pages/notificacoes/notificacoes.dart';
-import '../pages/unidades_curriculares/unidades_curriculares.dart';
+import '../pages/unidades_curriculares/unidades_curriculares_page.dart';
 
 Route<dynamic> generateRoute(RouteSettings settings) {
   switch(settings.name) {

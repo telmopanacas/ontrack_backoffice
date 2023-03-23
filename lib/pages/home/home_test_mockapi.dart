@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import 'package:ontrack_backoffice/controllers/api_requests.dart';
+import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/controllers/controllers.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:http/http.dart' as http;
@@ -14,43 +14,47 @@ class HomePageAPI extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: background,
-      child: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-            child: Column(
-              children: [
-                Text('Home', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
-                SizedBox(height: 40,),
+    return SingleChildScrollView(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        color: background,
+        child: Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+              child: Column(
+                children: [
+                  Text('Home', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
+                  SizedBox(height: 40,),
 
-                // Container de UCs e Eventos de Avaliação
-                //TODO: Porque é que est+a a dar RenderFlex overflowed?
-                Row(
-                  children: [
-                    //UCs
-                    buildUCsContainer(context),
+                  // Container de UCs e Eventos de Avaliação
+                  //TODO: Porque é que est+a a dar RenderFlex overflowed?
+                  Row(
+                    children: [
+                      //UCs
+                      buildUCsContainer(context),
 
-                    //Eventos de Avaliação
-                    buildListaEventosAvaliacao(context),
-                  ],
-                ),
-                Divider(
-                  color: Colors.grey[400],
-                  height: 40,
-                  thickness: 1,
-                  indent: 0,
-                  endIndent: 0,
-                ),
-                //TODO: Pesquisar sobre o Flexible
+                      //Eventos de Avaliação
+                      buildListaEventosAvaliacao(context),
+                    ],
+                  ),
+                  Divider(
+                    color: Colors.grey[400],
+                    height: 40,
+                    thickness: 1,
+                    indent: 0,
+                    endIndent: 0,
+                  ),
+                  //TODO: Pesquisar sobre o Flexible
 
-                // Parte de baixo com o calendário e os detalhes do dia
-                Flexible(
-                  child: Calendario()
-                )
-              ],
-            ),
-          )
+                  // Parte de baixo com o calendário e os detalhes do dia
+                  Expanded(
+                    child: Calendario()
+                  )
+                ],
+              ),
+            )
+        ),
       ),
     );
   }
@@ -100,6 +104,7 @@ class HomePageAPI extends StatelessWidget {
                     color: Colors.white.withOpacity(0.3),
                     borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10), bottomRight: Radius.circular(10)),
                   ),
+
                   //Container do ListView
                   child: SizedBox.expand(
                     child: Container(
@@ -141,7 +146,7 @@ class HomePageAPI extends StatelessWidget {
                     ),
                     height: 40,
                     width: double.infinity,
-                      child: Center(child: Text('Próximas Avaliações', style: TextStyle(color: Colors.white, fontSize: 17),))
+                      child: Center(child: Text('Próximas Avaliações', style: TextStyle(color: Colors.white, fontSize: 17), overflow: TextOverflow.ellipsis,))
                   )
                 )
               ]
