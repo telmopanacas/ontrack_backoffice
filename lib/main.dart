@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => LoginPage(),
         '/forgot_password': (context) => ForgotPasswordPage(),
-        '/home': (context) => Home(),
+        '/home': (context) => Layout(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,

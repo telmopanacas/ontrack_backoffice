@@ -15,6 +15,7 @@ class MediumScreen extends StatelessWidget {
         body: Row(
           children: [
             // Side Menu
+            //Branch Navegation
             buildSideMenu(),
             // Main Content
             Expanded(
