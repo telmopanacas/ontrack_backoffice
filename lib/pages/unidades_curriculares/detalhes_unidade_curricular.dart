@@ -12,22 +12,23 @@ class DetalhesUnidadeCurricularPage extends StatefulWidget {
 class _DetalhesUnidadeCurricularPageState extends State<DetalhesUnidadeCurricularPage> {
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-      color: background,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Detalhes Unidades Curriculares Page'),
-            SizedBox(height: 20,),
-            ElevatedButton(
-              onPressed: () {
-               navigationController.goBack();
-              },
-              child: Text('Voltar'),
-            )
-          ],
+    return Scaffold(
+      body: Container(
+        color: background,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Detalhes Unidades Curriculares Page'),
+              SizedBox(height: 20,),
+              ElevatedButton(
+                onPressed: () {
+                 navigationController.goBack();
+                },
+                child: Text('Voltar'),
+              )
+            ],
+          ),
         ),
       ),
     );

@@ -5,14 +5,14 @@ import 'package:http/http.dart' as http;
 
 import '../widgets/api_data_widgets/api_data_helper.dart';
 
-Future<List<Widget>> getUCByProfID() async {
+Future<List<Widget>> getUCByProfID(BuildContext context) async {
   // Id do professor
   var id = 1;
 
   var response = await http.get(Uri.parse('https://6411e71a6e3ca31753014d37.mockapi.io/professores/$id/unidades_curriculares'));
   if (response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
-    var jsonResponse = resultados.map((uc) => getUCWidgetFromJSON(uc)).toList();
+    var jsonResponse = resultados.map((uc) => getUCWidgetFromJSON(context, uc)).toList();
     return jsonResponse;
   } else {
     print('Request failed with status: ${response.statusCode}.');

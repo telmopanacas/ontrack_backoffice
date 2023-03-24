@@ -3,6 +3,7 @@ import 'package:ontrack_backoffice/controllers/controllers.dart';
 import 'package:ontrack_backoffice/controllers/login_form_controllers.dart';
 import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
 import 'package:ontrack_backoffice/helpers/local_navigator.dart';
+import 'package:ontrack_backoffice/pages/home/home_test_mockapi.dart';
 import 'package:ontrack_backoffice/routing/routes.dart';
 import 'package:ontrack_backoffice/widgets/home_page/medium_screen/side_menu_item.dart';
 
@@ -12,17 +13,11 @@ class MediumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Row(
-          children: [
-            // Side Menu
-            //Branch Navegation
-            buildSideMenu(),
-            // Main Content
-            Expanded(
-              child: localNavigator()
-            ),
-          ],
-        )
+      // App Bar
+      appBar: AppBar(
+        
+      ),
+      body: HomePageAPI(),
     );
   }
 

@@ -66,7 +66,7 @@ class HomePageAPI extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.4,
 
       child: FutureBuilder(
-        future: getUCByProfID(),
+        future: getUCByProfID(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return SingleChildScrollView(

@@ -7,6 +7,7 @@ import 'package:ontrack_backoffice/pages/layout.dart';
 
 import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
 import 'package:ontrack_backoffice/pages/login/login_page.dart';
+import 'package:ontrack_backoffice/pages/unidades_curriculares/detalhes_unidade_curricular.dart';
 import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_page.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
@@ -30,6 +31,8 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginPage(),
         '/forgot_password': (context) => ForgotPasswordPage(),
         '/home': (context) => Layout(),
+        '/ucs': (context) => UnidadesCurricularesPage(),
+        '/detalhes_ucs': (context) => DetalhesUnidadeCurricularPage(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
