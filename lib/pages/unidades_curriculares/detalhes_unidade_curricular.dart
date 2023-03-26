@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:ontrack_backoffice/controllers/controllers.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 class DetalhesUnidadeCurricularPage extends StatefulWidget {
@@ -23,7 +22,8 @@ class _DetalhesUnidadeCurricularPageState extends State<DetalhesUnidadeCurricula
               SizedBox(height: 20,),
               ElevatedButton(
                 onPressed: () {
-                 navigationController.goBack();
+                 //TODO: Fazer voltar para tras
+                  Navigator.pop(context);
                 },
                 child: Text('Voltar'),
               )

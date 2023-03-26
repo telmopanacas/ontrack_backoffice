@@ -6,10 +6,12 @@ class EventosDeAvaliacaoPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: background,
-      child: Center(
-        child: Text('Eventos de Avaliação Page'),
+    return Scaffold(
+      body: Container(
+        color: background,
+        child: Center(
+          child: Text('Eventos de Avaliação Page'),
+        ),
       ),
     );
   }

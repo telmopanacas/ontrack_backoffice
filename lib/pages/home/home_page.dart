@@ -4,32 +4,122 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import 'package:ontrack_backoffice/services/api_requests.dart';
-import 'package:ontrack_backoffice/controllers/controllers.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:ontrack_backoffice/widgets/home_page/medium_screen/calendario.dart';
+import 'package:ontrack_backoffice/widgets/home_page/medium_screen/medium_layout.dart';
 
-class HomePageAPI extends StatelessWidget {
-  const HomePageAPI({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: background,
-        child: Center(
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-              child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primary,
+        title: TextButton(
+            onPressed: (){
+              Navigator.pushReplacementNamed(context, '/home');
+            },
+            child: Text('OnTrack',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              ),
+            ),
+        ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 20),
+            child: Center(
+              child: Wrap(
+                spacing: 15,
                 children: [
-                  Text('Home', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),),
-                  SizedBox(height: 40,),
-
-                  // Container de UCs e Eventos de Avaliação
-                  //TODO: Porque é que est+a a dar RenderFlex overflowed?
-                  Row(
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/home');
+                      },
+                      child: Text('Home',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 18,
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                  ),
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/ucs');
+                      },
+                      child: Text('Unidades Curriculares', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),)
+                  ),
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/avaliacoes');
+                      },
+                      child: Text('Avaliações', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),)
+                  ),
+                  TextButton(
+                      onPressed: (){
+                        Navigator.pushNamed(context, '/notificacoes');
+                      },
+                      child: Text('Notificações', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),)
+                  ),
+                  Icon(
+                    Icons.logout,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      drawer: Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            DrawerHeader(
+              child: buildProfile(),
+              decoration: BoxDecoration(
+                color: primary,
+              ),
+            ),
+            ListTile(
+              title: Text('Item 1'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+            ListTile(
+              title: Text('Item 2'),
+              onTap: () {
+                // Update the state of the app
+                // ...
+                // Then close the drawer
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          color: background,
+          child: Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
+                child: Column(
+                  children: [
+                    // Container de UCs e Eventos de Avaliação
+                    //TODO: Porque é que est+a a dar RenderFlex overflowed?
+                    Row(
                     children: [
                       //UCs
                       buildUCsContainer(context),
@@ -37,23 +127,24 @@ class HomePageAPI extends StatelessWidget {
                       //Eventos de Avaliação
                       buildListaEventosAvaliacao(context),
                     ],
-                  ),
-                  Divider(
-                    color: Colors.grey[400],
-                    height: 40,
-                    thickness: 1,
-                    indent: 0,
-                    endIndent: 0,
-                  ),
-                  //TODO: Pesquisar sobre o Flexible
+                      ),
+                    Divider(
+                      color: Colors.grey[400],
+                      height: 40,
+                      thickness: 1,
+                      indent: 0,
+                      endIndent: 0,
+                    ),
+                    //TODO: Pesquisar sobre o Flexible
 
-                  // Parte de baixo com o calendário e os detalhes do dia
-                  Expanded(
-                    child: Calendario()
-                  )
-                ],
-              ),
-            )
+                    // Parte de baixo com o calendário e os detalhes do dia
+                    Expanded(
+                      child: Calendario()
+                    )
+                  ],
+                ),
+              )
+          ),
         ),
       ),
     );

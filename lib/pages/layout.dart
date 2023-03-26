@@ -12,7 +12,7 @@ class Layout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-      largeScreen: LargeScreen(),
+      largeScreen: MediumScreen(),
       mediumScreen: MediumScreen(),
       smallScreen: SmallScreen(),
     );

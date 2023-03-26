@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ontrack_backoffice/controllers/controllers.dart';
 import 'package:ontrack_backoffice/controllers/login_form_controllers.dart';
-import 'package:ontrack_backoffice/controllers/navigation_controller.dart';
-import 'package:ontrack_backoffice/helpers/local_navigator.dart';
-import 'package:ontrack_backoffice/pages/home/home_test_mockapi.dart';
+import 'package:ontrack_backoffice/pages/home/home_page.dart';
 import 'package:ontrack_backoffice/routing/routes.dart';
-import 'package:ontrack_backoffice/widgets/home_page/medium_screen/side_menu_item.dart';
 
 class MediumScreen extends StatelessWidget {
   const MediumScreen({Key? key}) : super(key: key);
@@ -13,11 +9,7 @@ class MediumScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // App Bar
-      appBar: AppBar(
-        
-      ),
-      body: HomePageAPI(),
+      body: HomePage(),
     );
   }
 
@@ -29,40 +21,11 @@ class MediumScreen extends StatelessWidget {
                 // Profile
                 buildProfile(),
                 // Menu
-                buildMenu()
               ]
             ),
           );
   }
 
-  Expanded buildMenu() {
-    return Expanded(
-        child: Container(
-
-          child: ListView(
-            // Vai buscar os nomes das rotas definidas em routing/routes.dart e cria um MenuItem para cada um
-            children: sideMenuItems.map((itemName) => MenuItem(
-                itemName: itemName,
-                onTap: () {
-                  print(itemName);
-                  // Se o item clicado for o de logout, então faz logout e redireciona para a página de login
-                  if(itemName == AutenticacaoPageRoute){
-                    //TODO: Implementar logout
-                  }
-                  // Se o item clicado não for o de logout, então muda o item ativo para o clicado e navega para a página correspondente
-                  else
-                  if(!menuController.isActive(itemName)){
-                    menuController.changeActiveItemTo(itemName);
-                    //TODO: Implementar navegação
-                    navigationController.navigateTo(itemName);
-
-                  }
-                },
-            )).toList(),
-          ),
-
-        )
-    );
   }
 
   Container buildProfile() {
@@ -94,5 +57,5 @@ class MediumScreen extends StatelessWidget {
       ),
     );
   }
-}
+
 
