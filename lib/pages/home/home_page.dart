@@ -6,8 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:http/http.dart' as http;
+import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
+import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
 import 'package:ontrack_backoffice/widgets/home_page/medium_screen/calendario.dart';
-import 'package:ontrack_backoffice/widgets/home_page/medium_screen/medium_layout.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,98 +16,8 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: primary,
-        title: TextButton(
-            onPressed: (){
-              Navigator.pushReplacementNamed(context, '/home');
-            },
-            child: Text('OnTrack',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
-            ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 20),
-            child: Center(
-              child: Wrap(
-                spacing: 15,
-                children: [
-                  TextButton(
-                      onPressed: (){
-                        Navigator.pushNamed(context, '/home');
-                      },
-                      child: Text('Home',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                  ),
-                  TextButton(
-                      onPressed: (){
-                        Navigator.pushNamed(context, '/ucs');
-                      },
-                      child: Text('Unidades Curriculares', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),)
-                  ),
-                  TextButton(
-                      onPressed: (){
-                        Navigator.pushNamed(context, '/avaliacoes');
-                      },
-                      child: Text('Avaliações', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),)
-                  ),
-                  TextButton(
-                      onPressed: (){
-                        Navigator.pushNamed(context, '/notificacoes');
-                      },
-                      child: Text('Notificações', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18),)
-                  ),
-                  Icon(
-                    Icons.logout,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              child: buildProfile(),
-              decoration: BoxDecoration(
-                color: primary,
-              ),
-            ),
-            ListTile(
-              title: Text('Item 1'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-            ListTile(
-              title: Text('Item 2'),
-              onTap: () {
-                // Update the state of the app
-                // ...
-                // Then close the drawer
-                Navigator.pop(context);
-              },
-            ),
-          ],
-        ),
-      ),
+      appBar: buildAppBar(context, 'Home'),
+      drawer: buildDrawer(context),
       body: SingleChildScrollView(
         child: Container(
           width: MediaQuery.of(context).size.width,

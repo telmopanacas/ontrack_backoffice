@@ -28,7 +28,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Align(
               alignment: Alignment.centerLeft,
               child: SvgPicture.asset(
-                'assets/images/undraw_educator_re_ju47.svg',
+                'assets/images/login_image.svg',
                 height: 500,
               ),
             )

@@ -47,7 +47,7 @@ class LoginForm extends StatelessWidget {
           SizedBox(height: 30),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: loginButtonColor,
+              backgroundColor: primary,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15)
               ),
