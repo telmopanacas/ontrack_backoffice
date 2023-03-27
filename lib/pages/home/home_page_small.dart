@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-class LargeScreen extends StatelessWidget {
-  const LargeScreen({Key? key}) : super(key: key);
+class HomePageSmall extends StatelessWidget {
+  const HomePageSmall({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         child: Center(
-          child: Text('Large Screen'),
+          child: Text('Home Page Small Screen'),
         ),
-      )
-    );
+      ));
   }
 }

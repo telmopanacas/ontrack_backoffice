@@ -1,17 +1,12 @@
-import 'dart:convert';
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
-import 'package:http/http.dart' as http;
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
-import 'package:ontrack_backoffice/widgets/home_page/medium_screen/calendario.dart';
+import 'package:ontrack_backoffice/widgets/calendario/calendario.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePageMedium extends StatelessWidget {
+  const HomePageMedium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

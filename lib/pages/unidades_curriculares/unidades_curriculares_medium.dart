@@ -3,8 +3,8 @@ import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
 
-class UnidadesCurricularesPage extends StatelessWidget {
-  const UnidadesCurricularesPage({Key? key}) : super(key: key);
+class UnidadesCurricularesMedium extends StatelessWidget {
+  const UnidadesCurricularesMedium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

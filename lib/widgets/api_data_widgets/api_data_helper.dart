@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:ontrack_backoffice/routing/routes.dart';
-
 Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   return InkWell(
     onTap: () {

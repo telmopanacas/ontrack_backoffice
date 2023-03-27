@@ -3,8 +3,8 @@ import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
 
-class EventosDeAvaliacaoPage extends StatelessWidget {
-  const EventosDeAvaliacaoPage({Key? key}) : super(key: key);
+class AvaliacoesMedium extends StatelessWidget {
+  const AvaliacoesMedium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

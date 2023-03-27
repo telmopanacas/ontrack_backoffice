@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ontrack_backoffice/controllers/menu_controller.dart';
-import 'package:ontrack_backoffice/pages/eventos_avaliacao/eventos_avaliacao.dart';
-import 'package:ontrack_backoffice/pages/home/home_page.dart';
+import 'package:ontrack_backoffice/pages/avaliacoes/avaliacoes_layout.dart';
+import 'package:ontrack_backoffice/pages/home/home_layout.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
-import 'package:ontrack_backoffice/pages/layout.dart';
 
 import 'package:ontrack_backoffice/pages/login/login_page.dart';
-import 'package:ontrack_backoffice/pages/notificacoes/notificacoes.dart';
-import 'package:ontrack_backoffice/pages/unidades_curriculares/detalhes_unidade_curricular.dart';
-import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_page.dart';
-import 'package:ontrack_backoffice/static/colors.dart';
+import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_layout.dart';
+import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_medium.dart';
+import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular.dart';
+import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_layout.dart';
 
 void main() {
-  Get.put(ControllerMenu());
   runApp(const MyApp());
 }
 
@@ -32,10 +28,10 @@ class MyApp extends StatelessWidget {
         '/': (context) => LoginPage(),
         '/login': (context) => LoginPage(),
         '/forgot_password': (context) => ForgotPasswordPage(),
-        '/home': (context) => HomePage(),
-        '/ucs': (context) => UnidadesCurricularesPage(),
-        '/avaliacoes': (context) => EventosDeAvaliacaoPage(),
-        '/notificacoes': (context) => NotificacoesPage(),
+        '/home': (context) => HomeLayout(),
+        '/ucs': (context) => UnidadesCurricularesLayout(),
+        '/avaliacoes': (context) => AvaliacoesLayout(),
+        '/notificacoes': (context) => NotificacoesLayout(),
         '/detalhes_ucs': (context) => DetalhesUnidadeCurricularPage(),
       },
       theme: ThemeData(

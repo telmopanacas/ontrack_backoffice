@@ -3,8 +3,8 @@ import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
 
-class NotificacoesPage extends StatelessWidget {
-  const NotificacoesPage({Key? key}) : super(key: key);
+class NotificacoesMedium extends StatelessWidget {
+  const NotificacoesMedium({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
