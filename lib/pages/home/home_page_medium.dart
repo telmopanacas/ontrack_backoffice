@@ -4,6 +4,7 @@ import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
 import 'package:ontrack_backoffice/widgets/calendario/calendario.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class HomePageMedium extends StatelessWidget {
   const HomePageMedium({Key? key}) : super(key: key);
@@ -18,39 +19,57 @@ class HomePageMedium extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
           color: background,
+
           child: Center(
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
-                child: Column(
-                  children: [
-                    ExpansionTile(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      title: Center(
-                          child: Text(
-                            'As suas unidades Curriculares',
+              child: Column(
+                children: [
+
+                  ExpansionTile(
+                    shape: Border(),
+                    title: Center(
+                        child: Text(
+                          'As suas unidades Curriculares',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )
+                        )
+                    ),
+                    textColor: Colors.black,
+                    initiallyExpanded: true,
+                    children: [
+                      // Container de UCs
+                      buildUCsContainer(context)
+                    ]
+                  ),
+                  SizedBox(height: 20,),
+                  ExpansionTile(
+                    shape: Border(),
+                    title: Center(
+                        child: Text(
+                            'Eventos e Avaliações',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             )
-                          )
-                      ),
-                      textColor: Colors.black,
-                      initiallyExpanded: true,
-                      children: [
-                        // Container de UCs
-                        buildUCsContainer(context)
-                      ]
+                        )
                     ),
+                    textColor: Colors.black,
+                    initiallyExpanded: true,
+                    children: [
+                      // Container de Eventos e Avaliações
 
+                      Calendario()
+                    ]
+                  ),
 
-                    // Parte de baixo com o calendário e os detalhes do dia
-                    Expanded(
-                      child: Calendario()
-                    )
-                  ],
-                ),
+                  // Parte de baixo com o calendário e os detalhes do dia
+                  /*
+                  Expanded(
+                    child: Calendario()
+                  ),
+                   */
+                ],
               )
           ),
         ),
@@ -61,12 +80,14 @@ class HomePageMedium extends StatelessWidget {
 
   Padding buildUCsContainer(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 10.0),
+      padding: const EdgeInsets.only(top: 30.0),
       child: Container(
-        //color: Colors.redAccent,
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.4,
-
+        color: Colors.redAccent,
+        //width: MediaQuery.of(context).size.width,
+        //height: MediaQuery.of(context).size.height * 0.4,
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.of(context).size.height * 0.4,
+        ),
         child: FutureBuilder(
           future: getUCByProfID(context),
           builder: (context, snapshot) {
