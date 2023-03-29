@@ -23,25 +23,27 @@ class HomePageMedium extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(20, 40, 20, 20),
                 child: Column(
                   children: [
-                    // Container de UCs e Eventos de Avaliação
-                    //TODO: Porque é que est+a a dar RenderFlex overflowed?
-                    Row(
-                    children: [
-                      //UCs
-                      buildUCsContainer(context),
-
-                      //Eventos de Avaliação
-                      //buildListaEventosAvaliacao(context),
-                    ],
+                    ExpansionTile(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                    Divider(
-                      color: Colors.grey[400],
-                      height: 40,
-                      thickness: 1,
-                      indent: 0,
-                      endIndent: 0,
+                      title: Center(
+                          child: Text(
+                            'As suas unidades Curriculares',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            )
+                          )
+                      ),
+                      textColor: Colors.black,
+                      initiallyExpanded: true,
+                      children: [
+                        // Container de UCs
+                        buildUCsContainer(context)
+                      ]
                     ),
-                    //TODO: Pesquisar sobre o Flexible
+
 
                     // Parte de baixo com o calendário e os detalhes do dia
                     Expanded(
@@ -57,28 +59,32 @@ class HomePageMedium extends StatelessWidget {
   }
 
 
-  Container buildUCsContainer(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width * 0.6,
-      height: MediaQuery.of(context).size.height * 0.4,
+  Padding buildUCsContainer(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10.0),
+      child: Container(
+        //color: Colors.redAccent,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * 0.4,
 
-      child: FutureBuilder(
-        future: getUCByProfID(context),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Wrap(
-                spacing: 15,
-                runSpacing: 15,
-                alignment: WrapAlignment.start,
-                children: snapshot.data as List<Widget>,
-              ),
-            );
-          } else {
-            return Center(child: CircularProgressIndicator());
-          }
-        },
+        child: FutureBuilder(
+          future: getUCByProfID(context),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Wrap(
+                  spacing: 15,
+                  runSpacing: 15,
+                  alignment: WrapAlignment.start,
+                  children: snapshot.data as List<Widget>,
+                ),
+              );
+            } else {
+              return Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
