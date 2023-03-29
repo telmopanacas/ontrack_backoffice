@@ -31,7 +31,7 @@ class HomePageMedium extends StatelessWidget {
                       buildUCsContainer(context),
 
                       //Eventos de Avaliação
-                      buildListaEventosAvaliacao(context),
+                      //buildListaEventosAvaliacao(context),
                     ],
                       ),
                     Divider(
