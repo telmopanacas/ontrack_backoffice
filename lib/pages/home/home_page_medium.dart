@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
+import 'package:ontrack_backoffice/widgets/animatedContainer.dart';
 import 'package:ontrack_backoffice/widgets/api_data_widgets/api_data_helper.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
@@ -95,83 +96,63 @@ class _HomePageMediumState extends State<HomePageMedium> {
             minHeight: MediaQuery.of(context).size.height,
           ),
           color: background,
-          child: Column(
+          child: Stack(
             children: [
-              ExpansionTile(
-                shape: Border(),
-                title: Center(
-                    child: Text(
-                      'As suas unidades Curriculares',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      )
-                    )
-                ),
-                textColor: Colors.black,
-                initiallyExpanded: true,
+              Column(
                 children: [
-                  // Container de UCs
-                  Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: buildUCsContainer(context),
-                  )
-                ]
-              ),
-              SizedBox(height: 20,),
-
-              ExpansionTile(
-                shape: Border(),
-                title: Center(
-                    child: Text(
-                        'Eventos e Avaliações',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
+                  ExpansionTile(
+                    shape: Border(),
+                    title: Center(
+                        child: Text(
+                          'As suas unidades Curriculares',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          )
                         )
-                    )
-                ),
-                textColor: Colors.black,
-                initiallyExpanded: true,
-                children: [
-                  // Container de Eventos e Avaliações
-                  Padding(
-                    padding: EdgeInsets.all(10.0),
-                    child: buildCalendario(),
+                    ),
+                    textColor: Colors.black,
+                    initiallyExpanded: true,
+                    children: [
+                      // Container de UCs
+                      Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: buildUCsContainer(context),
+                      )
+                    ]
                   ),
-                ]
+                  SizedBox(height: 20,),
+
+                  ExpansionTile(
+                    shape: Border(),
+                    title: Center(
+                        child: Text(
+                            'Eventos e Avaliações',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            )
+                        )
+                    ),
+                    textColor: Colors.black,
+                    initiallyExpanded: true,
+                    children: [
+                      // Container de Eventos e Avaliações
+                      Padding(
+                        padding: EdgeInsets.all(10.0),
+                        child: buildCalendario(),
+                      ),
+                    ]
+                  ),
+              ],
+            ),
+              Positioned(
+                right: 0,
+                top: 80,
+                child: AnimatedContainerExample(),
               ),
             ],
           ),
-        ),
-      ),
-      endDrawer: Drawer(
-        child: ExpansionPanelList(
-          expansionCallback: (int index, bool isExpanded) {},
-          children: [
-            ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                return ListTile(
-                  title: Text('Menu 1'),
-                );
-              },
-              body: ListTile(
-                title: Text('Submenu 1'),
-              ),
-              isExpanded: false,
-            ),
-            ExpansionPanel(
-              headerBuilder: (BuildContext context, bool isExpanded) {
-                return ListTile(
-                  title: Text('Menu 2'),
-                );
-              },
-              body: ListTile(
-                title: Text('Submenu 2'),
-              ),
-              isExpanded: false,
-            ),
-          ],
         ),
       ),
     );
