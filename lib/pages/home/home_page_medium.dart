@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
-import 'package:ontrack_backoffice/widgets/animatedContainer.dart';
+import 'package:ontrack_backoffice/widgets/animated_containers/animatedContainer.dart';
 import 'package:ontrack_backoffice/widgets/api_data_widgets/api_data_helper.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
@@ -38,7 +38,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: Text('Eventos e Avaliações para o dia ${DateFormat('dd/MM/yyyy').format(selectedDay)}'),
+          title: Text('Eventos e avaliações para o dia ${DateFormat('dd/MM/yyyy').format(selectedDay)}'),
           content: SingleChildScrollView(
             child: FutureBuilder(
               future: getEventosProfessorDiaX(selectedDay),
@@ -100,6 +100,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
             children: [
               Column(
                 children: [
+                  SizedBox(height: 20,),
                   ExpansionTile(
                     shape: Border(),
                     title: Center(
@@ -121,7 +122,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
                       )
                     ]
                   ),
-                  SizedBox(height: 20,),
+                  SizedBox(height: 80,),
 
                   ExpansionTile(
                     shape: Border(),
@@ -139,16 +140,17 @@ class _HomePageMediumState extends State<HomePageMedium> {
                     children: [
                       // Container de Eventos e Avaliações
                       Padding(
-                        padding: EdgeInsets.all(10.0),
+                        padding: EdgeInsets.fromLTRB(10, 10, 10, 40),
                         child: buildCalendario(),
                       ),
                     ]
                   ),
-              ],
-            ),
+                ],
+              ),
               Positioned(
                 right: 0,
-                top: 80,
+                // 78 para alinhar com as UCs
+                top: 78,
                 child: AnimatedContainerExample(),
               ),
             ],

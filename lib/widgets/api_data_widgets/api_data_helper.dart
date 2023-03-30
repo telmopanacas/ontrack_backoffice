@@ -94,7 +94,7 @@ Widget getEventoWidgetFromJSON(Map<String, dynamic> json, Color? corCartao){
       },
       child: Container(
         decoration: BoxDecoration(
-          color: corCartao!.withOpacity(0.8),
+          color: corCartao,
           borderRadius: BorderRadius.circular(5),
         ),
         width: double.infinity,
