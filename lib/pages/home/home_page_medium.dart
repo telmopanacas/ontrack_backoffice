@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
-import 'package:ontrack_backoffice/widgets/animated_containers/animatedContainer.dart';
+import 'package:ontrack_backoffice/widgets/animated_containers/proximas_avaliacoes.dart';
 import 'package:ontrack_backoffice/widgets/api_data_widgets/api_data_helper.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
@@ -151,7 +151,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
                 right: 0,
                 // 78 para alinhar com as UCs
                 top: 78,
-                child: AnimatedContainerExample(),
+                child: ProximasAvaliacoesAC(),
               ),
             ],
           ),

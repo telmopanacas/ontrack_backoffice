@@ -9,8 +9,11 @@ class DetalhesUnidadeCurricularPage extends StatefulWidget {
 }
 
 class _DetalhesUnidadeCurricularPageState extends State<DetalhesUnidadeCurricularPage> {
+
   @override
   Widget build(BuildContext context) {
+    final uc = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
+
     return Scaffold(
       body: Container(
         color: background,
@@ -19,6 +22,8 @@ class _DetalhesUnidadeCurricularPageState extends State<DetalhesUnidadeCurricula
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('Detalhes Unidades Curriculares Page'),
+              SizedBox(height: 20,),
+              Text('Nome: ${uc['name']}'),
               SizedBox(height: 20,),
               ElevatedButton(
                 onPressed: () {

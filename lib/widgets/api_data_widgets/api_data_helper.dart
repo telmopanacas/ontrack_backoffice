@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:ontrack_backoffice/static/colors.dart';
+
 Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   return InkWell(
     onTap: () {
       //TODO - Ir para os detalhes da UC
       print('Carregou em UC: ${json['name']}');
-      Navigator.pushNamed(context, '/detalhes_ucs');
+      Navigator.pushNamed(context, '/detalhes_ucs', arguments: json);
     },
     child: Container(
       height: 150,

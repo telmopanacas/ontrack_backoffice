@@ -2,17 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
-class AnimatedContainerExample extends StatefulWidget {
+class ProximasAvaliacoesAC extends StatefulWidget {
   @override
-  _AnimatedContainerExampleState createState() => _AnimatedContainerExampleState();
+  _ProximasAvaliacoesACState createState() => _ProximasAvaliacoesACState();
 }
 
-class _AnimatedContainerExampleState extends State<AnimatedContainerExample> {
+class _ProximasAvaliacoesACState extends State<ProximasAvaliacoesAC> {
   bool _isExpanded = false;
   double _expanded_width = 350;
-  double _collapsed_width = 50;
   double _expanded_height = 300;
-  double _collapsed_height = 230;
+
+  double _collapsed_width = 50;
+  double _collapsed_height = 250;
 
   /*
    *  É feito um Inkwell para termos a função onTap(), que vai alterar o estado
