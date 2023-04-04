@@ -19,8 +19,9 @@ class HomePageMedium extends StatefulWidget {
 }
 
 class _HomePageMediumState extends State<HomePageMedium> {
-  DateTime today = DateTime.now();
-
+  DateTime _today = DateTime.now();
+  bool _ucIsExpanded = true;
+  bool _calendarIsExpanded = true;
   /*
   * Função que vai ser chamada pelo TableCalendar quando se clica num dia
   * Esta função vai mostrar um AlertDialog com os eventos e avaliações do dia
@@ -79,13 +80,15 @@ class _HomePageMediumState extends State<HomePageMedium> {
         )
     );
     setState(() {
-      today = selectedDay;
+      _today = selectedDay;
     });
   }
 
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
       appBar: buildAppBar(context, 'Home'),
       drawer: buildDrawer(context),
@@ -102,15 +105,27 @@ class _HomePageMediumState extends State<HomePageMedium> {
                 children: [
                   SizedBox(height: 20,),
                   ExpansionTile(
+                    trailing: SizedBox.shrink(),
+                    onExpansionChanged: (value) {
+                      setState(() {
+                        _ucIsExpanded = !_ucIsExpanded;
+                      });
+                    },
                     shape: Border(),
-                    title: Center(
-                        child: Text(
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
                           'As suas unidades Curriculares',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20,
                           )
-                        )
+                        ),
+                        SizedBox(width: 5),
+                        _ucIsExpanded ? Icon(Icons.keyboard_arrow_up, color: primary,) : Icon(Icons.keyboard_arrow_down, color: primary,),
+                      ],
                     ),
                     textColor: Colors.black,
                     initiallyExpanded: true,
@@ -126,14 +141,26 @@ class _HomePageMediumState extends State<HomePageMedium> {
 
                   ExpansionTile(
                     shape: Border(),
-                    title: Center(
-                        child: Text(
+                    trailing: SizedBox.shrink(),
+                    onExpansionChanged: (value) {
+                      setState(() {
+                        _calendarIsExpanded = !_calendarIsExpanded;
+                      });
+                    },
+                    title: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
                             'Eventos e Avaliações',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20,
                             )
-                        )
+                        ),
+                        SizedBox(width: 5),
+                        _calendarIsExpanded ? Icon(Icons.keyboard_arrow_up, color: primary,) : Icon(Icons.keyboard_arrow_down, color: primary,),
+                      ],
                     ),
                     textColor: Colors.black,
                     initiallyExpanded: true,
@@ -176,7 +203,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
         titleCentered: true,
         titleTextStyle: TextStyle(
           color: Colors.black,
-          fontSize: 20,
+          fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
         leftChevronIcon: Icon(Icons.arrow_back_ios, color: Colors.black,),
@@ -184,7 +211,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
       ),
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 12, 31),
-      focusedDay: today,
+      focusedDay: _today,
       calendarFormat: CalendarFormat.month,
       startingDayOfWeek: StartingDayOfWeek.monday,
       /*
@@ -206,7 +233,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
       availableGestures: AvailableGestures.all,
       // O que acontece quando se clica num dia
       onDaySelected: _onDaySelected,
-      selectedDayPredicate: (day) => isSameDay(today, day),
+      selectedDayPredicate: (day) => isSameDay(_today, day),
       /*
       * Estilo do calendário
       * No CalendarStyle é possível definir o estilo dos dias normais,
