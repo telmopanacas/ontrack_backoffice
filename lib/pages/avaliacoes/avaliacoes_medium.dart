@@ -14,7 +14,22 @@ class AvaliacoesMedium extends StatelessWidget {
       body: Container(
         color: background,
         child: Center(
-          child: Text('Eventos de Avaliação Page'),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Eventos de Avaliação Page'),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/criar_avaliacao');
+                  },
+                  child: Text('Criar Avaliação'),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

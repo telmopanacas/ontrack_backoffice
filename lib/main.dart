@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ontrack_backoffice/pages/avaliacoes/avaliacoes_layout.dart';
+import 'package:ontrack_backoffice/pages/criar_avaliacao/criar_avaliacao_layout.dart';
 import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular_layout.dart';
 import 'package:ontrack_backoffice/pages/home/home_layout.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/avaliacoes': (context) => AvaliacoesLayout(),
         '/notificacoes': (context) => NotificacoesLayout(),
         '/detalhes_ucs': (context) => DetalhesUnidadeCurricularLayout(),
+        '/criar_avaliacao': (context) => CriarAvaliacaoLayout(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,

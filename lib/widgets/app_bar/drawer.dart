@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ontrack_backoffice/controllers/login_form_controllers.dart';
+import 'package:ontrack_backoffice/controllers/login/login_form_controllers.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 List<String> pages = ['Home', 'Unidades Curriculares', 'Avaliações', 'Notificações', 'Sair'];
