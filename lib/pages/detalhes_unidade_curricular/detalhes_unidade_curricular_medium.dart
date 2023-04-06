@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
+import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
+import 'package:ontrack_backoffice/widgets/app_bar/drawer.dart';
 
-class DetalhesUnidadeCurricularPage extends StatefulWidget {
-  const DetalhesUnidadeCurricularPage({Key? key}) : super(key: key);
+class DetalhesUnidadeCurricularMedium extends StatefulWidget {
+  const DetalhesUnidadeCurricularMedium({Key? key}) : super(key: key);
 
   @override
-  State<DetalhesUnidadeCurricularPage> createState() => _DetalhesUnidadeCurricularPageState();
+  State<DetalhesUnidadeCurricularMedium> createState() => _DetalhesUnidadeCurricularMediumState();
 }
 
-class _DetalhesUnidadeCurricularPageState extends State<DetalhesUnidadeCurricularPage> {
+class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricularMedium> {
 
   @override
   Widget build(BuildContext context) {
     final uc = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
     return Scaffold(
+      appBar: buildAppBar(context, 'Unidades Curriculares'),
+      //drawer: buildDrawer(context),
       body: Container(
         color: background,
         child: Center(

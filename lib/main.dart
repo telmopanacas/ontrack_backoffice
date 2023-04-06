@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ontrack_backoffice/pages/avaliacoes/avaliacoes_layout.dart';
+import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular_layout.dart';
 import 'package:ontrack_backoffice/pages/home/home_layout.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
 
 import 'package:ontrack_backoffice/pages/login/login_page.dart';
 import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_layout.dart';
 import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_medium.dart';
-import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular.dart';
+import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular_medium.dart';
 import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_layout.dart';
 
 void main() {
@@ -32,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/ucs': (context) => UnidadesCurricularesLayout(),
         '/avaliacoes': (context) => AvaliacoesLayout(),
         '/notificacoes': (context) => NotificacoesLayout(),
-        '/detalhes_ucs': (context) => DetalhesUnidadeCurricularPage(),
+        '/detalhes_ucs': (context) => DetalhesUnidadeCurricularLayout(),
       },
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
