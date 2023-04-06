@@ -4,6 +4,7 @@ import 'dart:math' as math;
 import 'package:ontrack_backoffice/static/colors.dart';
 
 Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
+  double larguraCard = 190;
   return InkWell(
     onTap: () {
       //TODO - Ir para os detalhes da UC
@@ -12,7 +13,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
     },
     child: Container(
       height: 150,
-      width: 150,
+      width: larguraCard,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(10),
@@ -21,7 +22,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
         children: [
           Container(
             height: 40,
-            width: 150,
+            width: larguraCard,
             decoration: BoxDecoration(
               //TODO: Tornar cores fixas
               color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
@@ -39,7 +40,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
             ),
           ),
           Container(
-            width: 150,
+            width: larguraCard,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20,15,0,0),
               child: Column(

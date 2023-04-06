@@ -6,14 +6,13 @@ import 'package:intl/intl.dart';
 
 import '../widgets/api_data_widgets/api_data_helper.dart';
 
-const _servidorDeisiAPIEndpoint = 'https://6424a7567ac292e3cfef0a9c.mockapi.io';
-const _servidorOnTrackAPIEndpoint = 'https://6419c06ec152063412cb0109.mockapi.io';
+const _servidorOnTrackAPIEndpoint = 'https://642eb0988ca0fe3352d63279.mockapi.io';
 
 Future<List<Widget>> getUCByProfID(BuildContext context) async {
   // Id do professor
   var id = 1;
 
-  var response = await http.get(Uri.parse('${_servidorDeisiAPIEndpoint}/professores/$id/unidades_curriculares'));
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$id/unidade_curricular'));
   if (response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
     var jsonResponse = resultados.map((uc) => getUCWidgetFromJSON(context, uc)).toList();
@@ -24,12 +23,31 @@ Future<List<Widget>> getUCByProfID(BuildContext context) async {
   }
 }
 
+Future<List<Widget>> getUCProfByAnoLetivo(BuildContext context, String anoLetivo) async {
+  // Id do professor
+  var id = 1;
+
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$id/unidade_curricular'));
+  if (response.statusCode == 200) {
+    List<Widget> output = [];
+    var resultados = jsonDecode(response.body) as List;
+    resultados.map((uc) {
+      if(uc['ano'] == anoLetivo){
+        output.add(getUCWidgetFromJSON(context, uc));
+      }
+    }).toList();
+    return output;
+  } else {
+    print('Erro ao carregar as unidades curriculares');
+    return [];
+  }
+}
 
 Future<List<Widget>> getEventosProfID() async {
   // Id do professor
   var id = 1;
 
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professores/$id/evento_avaliacao'));
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$id/evento_avaliacao'));
   if (response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
     var jsonResponse = resultados.map((evento) => getEventoWidgetFromJSON(evento, Colors.white)).toList();
@@ -44,7 +62,7 @@ Future<List<Widget>> getEventosProfessorDiaX(DateTime selectedDay) async{
   // Id do professor
   var id = 1;
 
-  var response = await http.get(Uri.parse('https://6419c06ec152063412cb0109.mockapi.io/professores/$id/evento_avaliacao'));
+  var response = await http.get(Uri.parse('https://6419c06ec152063412cb0109.mockapi.io/professor/$id/evento_avaliacao'));
   if (response.statusCode == 200) {
     List<Widget> output = [];
     var resultados = jsonDecode(response.body) as List;
