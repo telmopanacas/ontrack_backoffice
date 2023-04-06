@@ -11,6 +11,7 @@ import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_layout.dart';
 import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_medium.dart';
 import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular_medium.dart';
 import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_layout.dart';
+import 'package:ontrack_backoffice/static/colors.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/criar_avaliacao': (context) => CriarAvaliacaoLayout(),
       },
       theme: ThemeData(
+        primarySwatch: primarySwatch,
         scaffoldBackgroundColor: Colors.white,
         pageTransitionsTheme: const PageTransitionsTheme(
           builders: {

@@ -9,6 +9,22 @@ List<Color> coresUCCards = [
   Color(0xFFFF749B),
 ];
 
+final MaterialColor primarySwatch = MaterialColor(
+  primary.value,
+  <int, Color> {
+    50:  primary.withOpacity(0.1),
+    100: primary.withOpacity(0.2),
+    200: primary.withOpacity(0.3),
+    300: primary.withOpacity(0.4),
+    400: primary.withOpacity(0.5),
+    500: primary.withOpacity(0.6),
+    600: primary.withOpacity(0.7),
+    700: primary.withOpacity(0.8),
+    800: primary.withOpacity(0.9),
+    900: primary.withOpacity(1),
+  }
+);
+
 Color loginButtonColor = Color(0xFF2E2E40);
 Color background = Colors.brown[50]!;
 Color primary = Color(0xFFCA0944);
