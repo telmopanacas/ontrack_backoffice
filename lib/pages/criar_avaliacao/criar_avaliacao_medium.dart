@@ -346,7 +346,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
             maxLength: 400,
             decoration: InputDecoration(
               border: OutlineInputBorder(),
-              hintText: 'Observações',
+              hintText: 'Descrição',
             ),
             controller: observacoesController,
             keyboardType: TextInputType.text,
@@ -388,7 +388,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
             tipoAvaliacaoController.clear();
             dataController.clear();
 
-            Navigator.pushReplacementNamed(context, '/avaliacoes');
+            Navigator.pop(context);
           }
         },
         child: Text('Criar avaliação', style: TextStyle(color: Colors.white, fontSize: 20)),

@@ -31,7 +31,6 @@ class _UnidadesCurricularesMediumState extends State<UnidadesCurricularesMedium>
             padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
             child: Column(
               children: [
-                SizedBox(height: 20),
                 Text(
                   'As suas unidades curriculares',
                   style: TextStyle(
@@ -61,7 +60,7 @@ class _UnidadesCurricularesMediumState extends State<UnidadesCurricularesMedium>
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      buildAnoLetivoButtao(),
+                      buildAnoLetivoButao(),
                     ],
                   ),
                 ),
@@ -76,7 +75,7 @@ class _UnidadesCurricularesMediumState extends State<UnidadesCurricularesMedium>
     );
   }
 
-  DropdownButton2<String> buildAnoLetivoButtao() {
+  DropdownButton2<String> buildAnoLetivoButao() {
     return DropdownButton2(
       isExpanded: true,
       items: _anos.map((ano) => DropdownMenuItem<String>(
@@ -92,7 +91,6 @@ class _UnidadesCurricularesMediumState extends State<UnidadesCurricularesMedium>
       onChanged: (value) {
         setState(() {
           _selectedAno = value as String;
-          print(value);
         });
       },
 
