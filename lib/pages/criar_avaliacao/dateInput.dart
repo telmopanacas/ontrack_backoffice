@@ -50,27 +50,32 @@ class _DateTimeInputState extends State<DateTimeInput> {
   @override
   Widget build(BuildContext context) {
     final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
-    data = TextEditingController(text: formatter.format(_dateTime));
+    dataController = TextEditingController(text: formatter.format(_dateTime));
     return Container(
       width: 400,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Data e hora',
-            style: TextStyle(
+          RichText(
+            text: TextSpan(
+              style: TextStyle(
                 color: Colors.black,
-                fontSize: 20
-            )
+                fontSize: 20,
+              ),
+              children: <TextSpan>[
+                TextSpan(text: 'Data e hora: '),
+                TextSpan(text: '*', style: TextStyle(color: Colors.red)),
+              ],
+            ),
           ),
           SizedBox(height: 10),
           TextField(
             readOnly: true,
-            controller: data,
+            controller: dataController,
             decoration: InputDecoration(
               labelStyle: TextStyle(color: Colors.black, fontSize: 20),
               border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10)
+                  borderRadius: BorderRadius.circular(4)
               ),
               suffixIcon: Icon(Icons.calendar_today),
             ),
