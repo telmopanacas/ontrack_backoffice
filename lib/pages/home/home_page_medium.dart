@@ -92,13 +92,13 @@ class _HomePageMediumState extends State<HomePageMedium> {
     return Scaffold(
       appBar: buildAppBar(context, 'Home'),
       drawer: buildDrawer(context),
-      body: SingleChildScrollView(
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          constraints: BoxConstraints(
-            minHeight: MediaQuery.of(context).size.height,
-          ),
-          color: background,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
+        ),
+        color: background,
+        child: SingleChildScrollView(
           child: Stack(
             children: [
               Column(

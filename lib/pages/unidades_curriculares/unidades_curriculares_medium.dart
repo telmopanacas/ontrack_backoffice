@@ -25,49 +25,55 @@ class _UnidadesCurricularesMediumState extends State<UnidadesCurricularesMedium>
       appBar: buildAppBar(context, 'Unidades Curriculares'),
       drawer: buildDrawer(context),
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
+        ),
         color: background,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
-            child: Column(
-              children: [
-                Text(
-                  'As suas unidades curriculares',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 50),
-                Container(
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
+              child: Column(
+                children: [
+                  Text(
+                    'As suas unidades curriculares',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Ano letivo: ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  SizedBox(height: 50),
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 2,
                       ),
-                      buildAnoLetivoButao(),
-                    ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Ano letivo: ',
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        buildAnoLetivoButao(),
+                      ],
+                    ),
                   ),
-                ),
-                SizedBox(height: 50),
-                buildUCsContainer(context)
+                  SizedBox(height: 50),
+                  buildUCsContainer(context)
 
-              ],
+                ],
+              ),
             ),
           ),
         )

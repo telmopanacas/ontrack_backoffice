@@ -22,76 +22,82 @@ class _AvaliacoesMediumState extends State<AvaliacoesMedium> {
       appBar: buildAppBar(context, 'Avaliações'),
       drawer: buildDrawer(context),
       body: Container(
+        width: MediaQuery.of(context).size.width,
+        constraints: BoxConstraints(
+          minHeight: MediaQuery.of(context).size.height,
+        ),
         color: background,
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
-            child: Column(
-              children: [
-                Text(
-                  'As suas avaliações',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 50),
-                Container(
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: 2,
+        child: SingleChildScrollView(
+          child: Center(
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
+              child: Column(
+                children: [
+                  Text(
+                    'As suas avaliações',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Estado: ',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      buildEstadoButao(),
-                    ],
-                  )
-                ),
-                SizedBox(height: 30),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/criar_avaliacao');
-                  },
-                  child: Container(
-                    width: 150,
-                    height: 40,
+                  SizedBox(height: 50),
+                  Container(
+                    width: 200,
                     decoration: BoxDecoration(
-                      color: Color(0xFFCA0944),
-                      borderRadius: BorderRadius.circular(5),
+                      borderRadius: BorderRadius.circular(4),
+                      border: Border.all(
+                        color: Colors.grey,
+                        width: 2,
+                      ),
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(
-                          'Criar Avaliação',
+                          'Estado: ',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        Icon(Icons.add, color: Colors.white,)
+                        buildEstadoButao(),
                       ],
+                    )
+                  ),
+                  SizedBox(height: 30),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, '/criar_avaliacao');
+                    },
+                    child: Container(
+                      width: 150,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFCA0944),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Criar Avaliação',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Icon(Icons.add, color: Colors.white,)
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 50),
-                buildAvaliacoesContainer(context),
-              ],
+                  SizedBox(height: 50),
+                  buildAvaliacoesContainer(context),
+                ],
+              ),
             ),
           ),
         ),

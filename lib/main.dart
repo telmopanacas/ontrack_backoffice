@@ -4,6 +4,7 @@ import 'package:ontrack_backoffice/pages/avaliacoes/avaliacoes_layout.dart';
 import 'package:ontrack_backoffice/pages/criar_avaliacao/criar_avaliacao_layout.dart';
 import 'package:ontrack_backoffice/pages/detalhes_avaliacao/detalhes_avaliacao_layout.dart';
 import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular_layout.dart';
+import 'package:ontrack_backoffice/pages/editar_avaliacao/editar_avaliacao_layout.dart';
 import 'package:ontrack_backoffice/pages/home/home_layout.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
 
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/detalhes_ucs': (context) => DetalhesUnidadeCurricularLayout(),
         '/criar_avaliacao': (context) => CriarAvaliacaoLayout(),
         '/detalhes_avaliacao': (context) => DetalhesAvaliacaoLayout(),
+        '/editar_avaliacao' : (context) => EditarAvaliacaoLayout(),
       },
       theme: ThemeData(
         primarySwatch: primarySwatch,
