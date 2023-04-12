@@ -13,7 +13,7 @@ class AvaliacoesMedium extends StatefulWidget {
 }
 
 class _AvaliacoesMediumState extends State<AvaliacoesMedium> {
-  final List<String> _estados = ['A decorrer', 'Terminadas'];
+  final List<String> _estados = ['A decorrer', 'Terminada'];
   String _selectedEstado = 'A decorrer';
 
   @override

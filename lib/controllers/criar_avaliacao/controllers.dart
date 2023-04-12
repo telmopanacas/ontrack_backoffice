@@ -14,4 +14,4 @@ TextEditingController tipoAvaliacaoController = TextEditingController();
 
 TextEditingController metodoEntregaController = TextEditingController();
 
-TextEditingController observacoesController = TextEditingController();
+TextEditingController descricaoController = TextEditingController();

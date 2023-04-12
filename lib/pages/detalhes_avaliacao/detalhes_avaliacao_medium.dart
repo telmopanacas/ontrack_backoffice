@@ -86,7 +86,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                       fixedSize: Size(100, 40),
                     ),
                     onPressed: () async {
-                      Navigator.pushNamed(context, '/editar_avaliacao');
+                      Navigator.pushReplacementNamed(context, '/editar_avaliacao', arguments: avaliacao);
                     },
                     child: Text('Editar'),
                   ),
@@ -258,6 +258,24 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                   TextSpan(text: avaliacao['metodo_entrega'], style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
+            ),
+            RichText(
+              text: TextSpan(
+                text: 'Data de realização: ',
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+                children: <TextSpan>[
+                  TextSpan(text: DateFormat('dd/MM/yyyy').format(data_realizacao), style: TextStyle(fontWeight: FontWeight.normal)),
+                ],
+              ),
+            ),
+            RichText(
+              text: TextSpan(
+                text: 'Hora de realização: ',
+                style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+                children: <TextSpan>[
+                  TextSpan(text: avaliacao['hora_realizacao'], style: TextStyle(fontWeight: FontWeight.normal)),
+                ],
+              )
             ),
             RichText(
               text: TextSpan(

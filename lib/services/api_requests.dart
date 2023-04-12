@@ -20,7 +20,7 @@ Future<bool> updateAvaliacao(Map<String, dynamic> avaliacao) async {
   if (response.statusCode == 200) {
     return true;
   } else {
-    print('Request failed with status: ${response.statusCode}.');
+    print('Request update failed with status: ${response.statusCode}.');
     return false;
   }
 }
@@ -37,6 +37,38 @@ Future<bool> deleteAvaliacao(int id) async {
     return false;
   }
 }
+
+Future<bool> createAvaliacao(Map<String, dynamic> avaliacao) async {
+  // Id do professor
+  var idProf = 1;
+
+  var response = await http.post(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(avaliacao));
+  if (response.statusCode == 201) {
+    return true;
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+    return false;
+  }
+}
+
+Future<Map<String, dynamic>> getAvaliacao(String id) async {
+  // Id do professor
+  var idProf = 1;
+
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao/$id'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body);
+    return jsonResponse;
+  } else {
+    print('Request getAvaliacao failed with status: ${response.statusCode}.');
+    return {};
+  }
+}
+
 
 Future<List<Widget>> getUCByProfID(BuildContext context) async {
   // Id do professor

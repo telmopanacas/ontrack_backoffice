@@ -49,7 +49,7 @@ class _DateTimeInputState extends State<DateTimeInput> {
 
   @override
   Widget build(BuildContext context) {
-    final DateFormat formatter = DateFormat('yyyy-MM-dd HH:mm');
+    final DateFormat formatter = DateFormat('dd/MM/yyyy HH:mm');
     dataController = TextEditingController(text: formatter.format(_dateTime));
     return Container(
       width: 400,

@@ -12,7 +12,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
       Navigator.pushNamed(context, '/detalhes_avaliacao', arguments: json);
     },
     child: Container(
-      height: 150,
+      height: 170,
       width: larguraCard,
       decoration: BoxDecoration(
         color: Colors.white,
@@ -63,6 +63,16 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
                         TextSpan(text: json['data_realizacao'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Hora: ',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(text: json['hora_realizacao'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
