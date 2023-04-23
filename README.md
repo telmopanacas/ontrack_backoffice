@@ -4,6 +4,7 @@
 
 - Este repositório destina-se apenas à componente de Backoffice do TFC-DEISI-272-Solução de registo de momentos de avaliação.
 
+- O backoffice pode ser acedido através deste link:  https://ontrack-94896.web.app
 
 ## Funcionalidades:
 
