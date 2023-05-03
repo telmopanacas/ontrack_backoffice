@@ -85,7 +85,7 @@ class _ProximasAvaliacoesACState extends State<ProximasAvaliacoesAC> {
                     child: Column(
                       children: [
                         FutureBuilder(
-                          future: getEventosProfID(),
+                          future: getEventosProfID(context),
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               return SingleChildScrollView(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 AppBar buildAppBar(BuildContext context, String pageTitle) {
@@ -10,7 +11,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
     backgroundColor: background,
     title: TextButton(
       onPressed: (){
-        Navigator.pushReplacementNamed(context, '/home');
+        GoRouter.of(context).push('/home');
       },
       child: Text('OnTrack',
         style: TextStyle(
@@ -29,7 +30,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
             children: [
               TextButton(
                 onPressed: (){
-                  Navigator.pushReplacementNamed(context, '/home');
+                  GoRouter.of(context).push('/home');
                 },
                 child: Text(
                   'Home',
@@ -42,7 +43,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
               ),
               TextButton(
                   onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/ucs');
+                    GoRouter.of(context).push('/ucs');
                   },
                   child: Text(
                     'Unidades Curriculares',
@@ -54,7 +55,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
               ),
               TextButton(
                   onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/avaliacoes');
+                    GoRouter.of(context).push('/avaliacoes');
                   },
                   child: Text(
                     'Avaliações',
@@ -66,7 +67,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
               ),
               TextButton(
                   onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/notificacoes');
+                    GoRouter.of(context).push('/notificacoes');
                   },
                   child: Text(
                     'Notificações',
@@ -79,7 +80,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
               InkWell(
                 onTap: (){
                   //TODO: Implementar logout
-                  Navigator.pushReplacementNamed(context, '/login');
+                  GoRouter.of(context).push('/login');
                 },
                 child: Icon(
                   Icons.logout,

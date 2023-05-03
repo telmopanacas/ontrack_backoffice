@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
@@ -69,7 +70,7 @@ class _AvaliacoesMediumState extends State<AvaliacoesMedium> {
                   SizedBox(height: 30),
                   InkWell(
                     onTap: () {
-                      Navigator.pushNamed(context, '/criar_avaliacao');
+                      GoRouter.of(context).push('/criar_avaliacao');
                     },
                     child: Container(
                       width: 150,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DetalhesAvaliacaoSmall extends StatelessWidget {
-  const DetalhesAvaliacaoSmall({Key? key}) : super(key: key);
+  final String? avaliacaoId;
+  const DetalhesAvaliacaoSmall({Key? key, required this.avaliacaoId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

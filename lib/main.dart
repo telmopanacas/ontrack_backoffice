@@ -13,6 +13,7 @@ import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_layout.dart';
 import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_medium.dart';
 import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_unidade_curricular_medium.dart';
 import 'package:ontrack_backoffice/pages/unidades_curriculares/unidades_curriculares_layout.dart';
+import 'package:ontrack_backoffice/routes/routes.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 void main() {
@@ -25,9 +26,10 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'OnTrack Backoffice',
+      /*
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
@@ -42,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/detalhes_avaliacao': (context) => DetalhesAvaliacaoLayout(),
         '/editar_avaliacao' : (context) => EditarAvaliacaoLayout(),
       },
+       */
       theme: ThemeData(
         primarySwatch: primarySwatch,
         scaffoldBackgroundColor: Colors.white,
@@ -62,6 +65,9 @@ class MyApp extends StatelessWidget {
         Locale('en'), // English
         Locale('pt'), // Spanish
       ],
+      routerDelegate: routes.routerDelegate,
+      routeInformationParser: routes.routeInformationParser,
+      routeInformationProvider: routes.routeInformationProvider,
     );
   }
 }

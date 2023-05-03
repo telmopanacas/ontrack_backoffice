@@ -45,6 +45,8 @@ dependencies:
     sdk: flutter
   table_calendar: ^3.0.8
   dropdown_button2: ^2.0.0
+  go_router: ^6.5.8
+
 
 dev_dependencies:
   flutter_test:

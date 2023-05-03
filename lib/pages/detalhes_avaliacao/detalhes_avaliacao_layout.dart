@@ -4,14 +4,15 @@ import 'package:ontrack_backoffice/pages/detalhes_avaliacao/detalhes_avaliacao_m
 import 'package:ontrack_backoffice/pages/detalhes_avaliacao/detalhes_avaliacao_small.dart';
 
 class DetalhesAvaliacaoLayout extends StatelessWidget {
-  const DetalhesAvaliacaoLayout({Key? key}) : super(key: key);
+  final String? avaliacaoId;
+  const DetalhesAvaliacaoLayout({Key? key, required this.avaliacaoId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ResponsiveWidget(
-        largeScreen: DetalhesAvaliacaoMedium(),
-        mediumScreen: DetalhesAvaliacaoMedium(),
-        smallScreen: DetalhesAvaliacaoSmall()
+        largeScreen: DetalhesAvaliacaoMedium(avaliacaoId: avaliacaoId),
+        mediumScreen: DetalhesAvaliacaoMedium(avaliacaoId: avaliacaoId),
+        smallScreen: DetalhesAvaliacaoSmall(avaliacaoId: avaliacaoId),
     );
   }
 }

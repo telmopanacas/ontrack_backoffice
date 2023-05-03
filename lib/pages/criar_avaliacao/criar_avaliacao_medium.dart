@@ -1,5 +1,6 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ontrack_backoffice/controllers/criar_avaliacao/controllers.dart';
 import 'package:ontrack_backoffice/pages/criar_avaliacao/dateInput.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
@@ -412,7 +413,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
             tipoAvaliacaoController.clear();
             dataController.clear();
 
-            Navigator.pushReplacementNamed(context, '/avaliacoes');
+            GoRouter.of(context).pop();
           }
         },
         child: Text('Criar avaliação',

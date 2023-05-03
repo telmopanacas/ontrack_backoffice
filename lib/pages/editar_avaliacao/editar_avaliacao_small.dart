@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 
 class EditarAvaliacaoSmall extends StatefulWidget {
-  const EditarAvaliacaoSmall({Key? key}) : super(key: key);
+  final String? avaliacaoId;
+  const EditarAvaliacaoSmall({Key? key, this.avaliacaoId}) : super(key: key);
 
   @override
   State<EditarAvaliacaoSmall> createState() => _EditarAvaliacaoSmallState();

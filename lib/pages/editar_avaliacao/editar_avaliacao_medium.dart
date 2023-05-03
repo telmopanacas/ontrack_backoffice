@@ -1,14 +1,17 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/controllers/criar_avaliacao/controllers.dart';
+import 'package:ontrack_backoffice/models/Avaliacao.dart';
 import 'package:ontrack_backoffice/pages/criar_avaliacao/dateInput.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 
 class EditarAvaliacaoMedium extends StatefulWidget {
-  const EditarAvaliacaoMedium({Key? key}) : super(key: key);
+  final String? avaliacaoId;
+  const EditarAvaliacaoMedium({Key? key, this.avaliacaoId}) : super(key: key);
 
   @override
   State<EditarAvaliacaoMedium> createState() => _EditarAvaliacaoMediumState();
@@ -48,87 +51,99 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
 
   @override
   Widget build(BuildContext context) {
-    final avaliacao = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    _selectedTipoAvaliacao = avaliacao['tipo'];
-    _selectedUnidadeCurricular = avaliacao['ucId'];
-    _selectedMetodoEntrega = avaliacao['metodo_entrega'];
+    return FutureBuilder(
+      future: getAvaliacao(widget.avaliacaoId!),
+      builder: (context, snapshot) {
+        if(snapshot.hasData) {
+          Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);
+          _selectedTipoAvaliacao = avaliacao.tipo;
+          _selectedUnidadeCurricular = avaliacao.ucId;
+          _selectedMetodoEntrega = avaliacao.metodo_entrega;
 
-    _idAvaliacao = avaliacao['id'];
-    nomeAvaliacaoController.text = avaliacao['name'];
-    tipoAvaliacaoController.text = _selectedTipoAvaliacao;
-    unidadeCurricularController.text = _selectedUnidadeCurricular;
-    dataController.text = '${avaliacao['data_realizacao']} ${avaliacao['hora_realizacao']}';
-    metodoEntregaController.text = _selectedMetodoEntrega;
-    descricaoController.text = avaliacao['descricao'];
+          _idAvaliacao = avaliacao.id;
+          nomeAvaliacaoController.text = avaliacao.name;
+          tipoAvaliacaoController.text = _selectedTipoAvaliacao;
+          unidadeCurricularController.text = _selectedUnidadeCurricular;
+          dataController.text = '${avaliacao.data_realizacao} ${avaliacao.hora_realizacao}';
+          metodoEntregaController.text = _selectedMetodoEntrega;
+          descricaoController.text = avaliacao.descricao;
 
-
-    return Scaffold(
-        appBar: buildAppBar(context, 'Avaliações'),
-        body: Container(
-          constraints: BoxConstraints(
-            minHeight: MediaQuery
-                .of(context)
-                .size
-                .height,
-          ),
-          color: background,
-          child: SingleChildScrollView(
-            child: Center(
-              child: Padding(
-                  padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Editar Avaliação',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 25,
-                        ),
-                      ),
-                      SizedBox(height: 40),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        width: _larguraTextFields,
-                        child: RichText(
-                          text: TextSpan(
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 15,
+          return Scaffold(
+              appBar: buildAppBar(context, 'Avaliações'),
+              body: Container(
+                constraints: BoxConstraints(
+                  minHeight: MediaQuery
+                      .of(context)
+                      .size
+                      .height,
+                ),
+                color: background,
+                child: SingleChildScrollView(
+                  child: Center(
+                    child: Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 30, 15, 30),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Editar Avaliação',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 25,
+                              ),
                             ),
-                            children: <TextSpan>[
-                              TextSpan(text: '*',
-                                  style: TextStyle(color: Colors.red)),
-                              TextSpan(text: ' Campos obrigatórios'),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 20),
-                      //Nome da avaliação
-                      buildNomeAvaliacao(),
-                      SizedBox(height: 40),
-                      buildTipoAvaliacao(),
-                      SizedBox(height: 40,),
-                      buildUnidadeCurricular(),
-                      SizedBox(height: 40),
-                      DateTimeInput(initialDateTime: DateFormat('dd/MM/yyyy HH:mm').parse(dataController.text)),
-                      SizedBox(height: 40),
-                      buildMetodoEntrega(),
-                      SizedBox(height: 40),
-                      buildDescricaoAvaliacao(),
-                      SizedBox(height: 40),
-                      buildBotaoCriarAvaliacao(context, avaliacao),
-                    ],
-                  )
-              ),
-            ),
-          ),
-        )
+                            SizedBox(height: 40),
+                            Container(
+                              alignment: Alignment.centerLeft,
+                              width: _larguraTextFields,
+                              child: RichText(
+                                text: TextSpan(
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(text: '*',
+                                        style: TextStyle(color: Colors.red)),
+                                    TextSpan(text: ' Campos obrigatórios'),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20),
+                            //Nome da avaliação
+                            buildNomeAvaliacao(),
+                            SizedBox(height: 40),
+                            buildTipoAvaliacao(),
+                            SizedBox(height: 40,),
+                            buildUnidadeCurricular(),
+                            SizedBox(height: 40),
+                            DateTimeInput(initialDateTime: DateFormat('dd/MM/yyyy HH:mm').parse(dataController.text)),
+                            SizedBox(height: 40),
+                            buildMetodoEntrega(),
+                            SizedBox(height: 40),
+                            buildDescricaoAvaliacao(),
+                            SizedBox(height: 40),
+                            buildBotaoCriarAvaliacao(context, avaliacao),
+                          ],
+                        )
+                    ),
+                  ),
+                ),
+              )
+          );
+        } else if(snapshot.hasError) {
+          return Text('${snapshot.error}');
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      },
     );
+
+
   }
 
   Container buildNomeAvaliacao() {
@@ -391,7 +406,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     );
   }
 
-  Container buildBotaoCriarAvaliacao(BuildContext context, Map<String, dynamic> avaliacao) {
+  Container buildBotaoCriarAvaliacao(BuildContext context, Avaliacao avaliacao) {
     return Container(
       width: _larguraTextFields,
       child: ElevatedButton(
@@ -423,8 +438,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
             tipoAvaliacaoController.clear();
             dataController.clear();
 
-            final avaliacaoUpdated = await getAvaliacao(_idAvaliacao);
-            Navigator.pushReplacementNamed(context, '/detalhes_avaliacao', arguments: avaliacaoUpdated);
+            GoRouter.of(context).pop();
           }
         },
         child: Text('Submeter',

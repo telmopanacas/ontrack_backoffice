@@ -1,7 +1,52 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:ontrack_backoffice/models/Notificacao.dart';
 import 'dart:math' as math;
 
 import 'package:ontrack_backoffice/static/colors.dart';
+
+Widget getNotificacaoWidget(Notificacao notificacao){
+  return Padding(
+    padding: const EdgeInsets.all(8.0),
+    child: InkWell(
+      onTap: () {},
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        height: 50,
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Wrap(
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 10,
+            children: [
+              const Icon(CupertinoIcons.bell, color: Colors.black, size: 25,),
+              const SizedBox(
+                height: 24,
+                child: VerticalDivider(
+                  thickness: 1,
+                  color: Colors.black,
+                ),
+              ),
+              Text('${notificacao.data}', style: const TextStyle(fontSize: 15),),
+              const SizedBox(
+                height: 24,
+                child: VerticalDivider(
+                  thickness: 1,
+                  color: Colors.black,
+                ),
+              ),
+              Text(notificacao.mensagem, style: const TextStyle(fontSize: 15),),
+            ]
+          ),
+        ),
+      ),
+    ),
+  );
+}
 
 Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   double larguraCard = 190;
@@ -9,7 +54,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
     onTap: () {
       //TODO - Ir para os detalhes da avaliação
       print('Carregou na avaliação: ${json['name']}');
-      Navigator.pushNamed(context, '/detalhes_avaliacao', arguments: json);
+      GoRouter.of(context).push('/avaliacoes/${json['id']}');
     },
     child: Container(
       height: 170,
@@ -103,7 +148,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
     onTap: () {
       //TODO - Ir para os detalhes da UC
       print('Carregou em UC: ${json['name']}');
-      Navigator.pushNamed(context, '/detalhes_ucs', arguments: json);
+      GoRouter.of(context).push('/ucs/${json['id']}');
     },
     child: Container(
       height: 150,
@@ -181,13 +226,14 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   );
 }
 
-Widget getHomeAvaliacoesWidgetFromJSON(Map<String, dynamic> json, Color? corCartao){
+Widget getHomeAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> json, Color? corCartao){
   return Padding(
     padding: const EdgeInsets.all(8.0),
     child: InkWell(
       onTap: () {
         //TODO - Ir para os detalhes do evento
         print('Carregou em evento: ${json['name']}');
+        GoRouter.of(context).push('/avaliacoes/${json['id']}');
       },
       child: Container(
         decoration: BoxDecoration(

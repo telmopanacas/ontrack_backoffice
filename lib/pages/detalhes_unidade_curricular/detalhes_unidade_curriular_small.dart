@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class DetalhesUnidadeCurricularSmall extends StatelessWidget {
-  const DetalhesUnidadeCurricularSmall({Key? key}) : super(key: key);
+  final String? ucId;
+  const DetalhesUnidadeCurricularSmall({Key? key, this.ucId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

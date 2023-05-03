@@ -1,14 +1,17 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:ontrack_backoffice/models/Avaliacao.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/app_bar/app_bar.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class DetalhesAvaliacaoMedium extends StatefulWidget {
-  const DetalhesAvaliacaoMedium({Key? key}) : super(key: key);
+  final String? avaliacaoId;
+  const DetalhesAvaliacaoMedium({Key? key, required this.avaliacaoId}) : super(key: key);
 
   @override
   State<DetalhesAvaliacaoMedium> createState() => _DetalhesAvaliacaoMediumState();
@@ -17,118 +20,130 @@ class DetalhesAvaliacaoMedium extends StatefulWidget {
 class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
   @override
   Widget build(BuildContext context) {
-    final avaliacao = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
 
-    final data_realizacao = DateFormat('dd/MM/yyyy').parse(avaliacao['data_realizacao']);
-    final alturaDetalhes = 400.0;
-
-
-    return Scaffold(
-      appBar: buildAppBar(context, 'Avaliações'),
-      //drawer: buildDrawer(context),
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        constraints: BoxConstraints(
-          minHeight: MediaQuery.of(context).size.height,
-        ),
-        color: background,
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Center(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
-                  child: Column(
-                    children: [
-                      Text(
-                        'Detalhes Avaliação',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 25,
-                          fontWeight: FontWeight.bold,
+    return FutureBuilder(
+      future: getAvaliacao(widget.avaliacaoId!),
+      builder: (context, snapshot) {
+        if(snapshot.hasData) {
+          Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);
+          final data_realizacao = DateFormat('dd/MM/yyyy').parse(avaliacao.data_realizacao);
+          final alturaDetalhes = 400.0;
+          return Scaffold(
+            appBar: buildAppBar(context, 'Avaliações'),
+            //drawer: buildDrawer(context),
+            body: Container(
+              width: MediaQuery.of(context).size.width,
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height,
+              ),
+              color: background,
+              child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 30, 10, 20),
+                          child: Column(
+                            children: [
+                              Text(
+                                'Detalhes Avaliação',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 50,),
+                              Text(
+                                '${avaliacao.name}',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              SizedBox(height: 50,),
+                              Container(
+                                width: 1200,
+                                constraints: BoxConstraints(
+                                  minHeight: alturaDetalhes,
+                                ),
+                                child: Row(
+                                  children: [
+                                    buildDetalhesAvaliacao(alturaDetalhes, avaliacao, data_realizacao),
+                                    buildCalendarioContainer(alturaDetalhes, data_realizacao),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
-                      SizedBox(height: 50,),
-                      Text(
-                        '${avaliacao['name']}',
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 23,
-                          fontWeight: FontWeight.bold,
-                        ),
+                    ),
+                    Positioned(
+                      right: 20,
+                      top: 100,
+                      child: Wrap(
+                        spacing: 10,
+                        children: [
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: Size(100, 40),
+                            ),
+                            onPressed: () async {
+                              GoRouter.of(context).push('/editar_avaliacao/${avaliacao.id}');
+                            },
+                            child: Text('Editar'),
+                          ),
+                          ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: Size(100, 40),
+                            ),
+                            onPressed: (){
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Eliminar Avaliação'),
+                                    content: Text('Tem a certeza que pretende eliminar esta avaliação?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text('Cancelar'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () async {
+                                          await deleteAvaliacao(int.parse(avaliacao.id));
+                                          GoRouter.of(context).pushReplacement('/avaliacoes');
+                                        },
+                                        child: Text('Eliminar'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            },
+                            child: Text('Eliminar'),
+                          ),
+                        ],
                       ),
-                      SizedBox(height: 50,),
-                      Container(
-                        width: 1200,
-                        constraints: BoxConstraints(
-                          minHeight: alturaDetalhes,
-                        ),
-                        child: Row(
-                          children: [
-                            buildDetalhesAvaliacao(alturaDetalhes, avaliacao, data_realizacao),
-                            buildCalendarioContainer(alturaDetalhes, data_realizacao),
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
-                ),
+                    )
+                  ]
               ),
             ),
-            Positioned(
-              right: 20,
-              top: 100,
-              child: Wrap(
-                spacing: 10,
-                children: [
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(100, 40),
-                    ),
-                    onPressed: () async {
-                      Navigator.pushReplacementNamed(context, '/editar_avaliacao', arguments: avaliacao);
-                    },
-                    child: Text('Editar'),
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      fixedSize: Size(100, 40),
-                    ),
-                    onPressed: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Eliminar Avaliação'),
-                            content: Text('Tem a certeza que pretende eliminar esta avaliação?'),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Cancelar'),
-                              ),
-                              TextButton(
-                                onPressed: () async {
-                                  await deleteAvaliacao(int.parse(avaliacao['id']));
-                                  Navigator.pushReplacementNamed(context, '/avaliacoes');
-                                },
-                                child: Text('Eliminar'),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: Text('Eliminar'),
-                  ),
-                ],
-              ),
-            )
-          ]
-        ),
-      ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('${snapshot.error}');
+        } else {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      }
     );
+
   }
 
   Expanded buildCalendarioContainer(double alturaDetalhes, DateTime data_realizacao) {
@@ -220,7 +235,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
     );
   }
 
-  Expanded buildDetalhesAvaliacao(double alturaDetalhes, Map<String, dynamic> avaliacao, DateTime data_realizacao) {
+  Expanded buildDetalhesAvaliacao(double alturaDetalhes, Avaliacao avaliacao, DateTime data_realizacao) {
     final dataOutput = data_realizacao.isAfter(DateTime.now()) ? '${data_realizacao.difference(DateTime.now()).inDays} dias' : 'Terminada';
 
     return Expanded(
@@ -237,7 +252,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Unidade Curricular: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao['ucId'], style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.ucId, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
             ),
@@ -246,7 +261,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Tipo de avaliação: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao['tipo'], style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.tipo, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
             ),
@@ -255,7 +270,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Método de entrega: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao['metodo_entrega'], style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.metodo_entrega, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
             ),
@@ -273,7 +288,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Hora de realização: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao['hora_realizacao'], style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.hora_realizacao, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               )
             ),

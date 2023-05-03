@@ -42,7 +42,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
           title: Text('Eventos e avaliações para o dia ${DateFormat('dd/MM/yyyy').format(selectedDay)}'),
           content: SingleChildScrollView(
             child: FutureBuilder(
-              future: getEventosProfessorDiaX(selectedDay),
+              future: getEventosProfessorDiaX(context,selectedDay),
               builder: (context, snapshot) {
                 if(snapshot.hasData){
                   // O pedido foi feito com sucesso e não há eventos para o dia
@@ -284,7 +284,7 @@ class _HomePageMediumState extends State<HomePageMedium> {
         maxHeight: MediaQuery.of(context).size.height * 0.4,
       ),
       child: FutureBuilder(
-        future: getUCByProfID(context),
+        future: getUCsProf(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return SingleChildScrollView(

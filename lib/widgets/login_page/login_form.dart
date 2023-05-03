@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
@@ -55,7 +56,7 @@ class LoginForm extends StatelessWidget {
             ),
             onPressed: () {
               //TODO: implement login
-              Navigator.pushReplacementNamed(context, '/home');
+              GoRouter.of(context).push('/home');
             },
             child: Text(
                 'Login',
