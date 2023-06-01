@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
+import 'package:ontrack_backoffice/services/api_login.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/custom_text.dart';
 
@@ -54,9 +55,12 @@ class LoginForm extends StatelessWidget {
               ),
               padding: EdgeInsets.symmetric(horizontal: 132, vertical: 20)
             ),
-            onPressed: () {
-              //TODO: implement login
-              GoRouter.of(context).push('/home');
+            onPressed: () async {
+              var loginValue = await login(emailController.text);
+              if (loginValue) {
+                GoRouter.of(context).push('/home');
+              }
+
             },
             child: Text(
                 'Login',
