@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ontrack_backoffice/helpers/user_helper.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 AppBar buildAppBar(BuildContext context, String pageTitle) {
@@ -79,7 +80,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
               ),
               InkWell(
                 onTap: (){
-                  //TODO: Implementar logout
+                  professor.id = 0;
                   GoRouter.of(context).push('/login');
                 },
                 child: Icon(

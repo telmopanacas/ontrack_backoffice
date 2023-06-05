@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:ontrack_backoffice/helpers/user_helper.dart';
 import 'package:ontrack_backoffice/pages/avaliacoes/avaliacoes_layout.dart';
 import 'package:ontrack_backoffice/pages/criar_avaliacao/criar_avaliacao_layout.dart';
 import 'package:ontrack_backoffice/pages/detalhes_avaliacao/detalhes_avaliacao_layout.dart';
@@ -34,58 +35,115 @@ final routes = GoRouter(
 
     GoRoute(
       path: '/home',
-      pageBuilder: (context, state) => const MaterialPage(child: HomeLayout()),
+      pageBuilder: (context, state){
+
+        if(professor.id <= 0) {
+          return const MaterialPage(child: LoginPage());
+        } else {
+          return const MaterialPage(child: HomeLayout());
+        }
+
+      }
     ),
 
     GoRoute(
       path: '/ucs',
-      pageBuilder: (context, state) => const MaterialPage(child: UnidadesCurricularesLayout()),
+      pageBuilder: (context, state) {
+
+        if(professor.id <= 0) {
+          return const MaterialPage(child: LoginPage());
+        } else {
+          return const MaterialPage(child: UnidadesCurricularesLayout());
+        }
+      }
     ),
 
     GoRoute(
       path: '/ucs/:ucId',
       pageBuilder: (context, state) {
-        if (state.params['ucId'] != null) {
-          return MaterialPage(child: DetalhesUnidadeCurricularLayout(ucId: state.params['ucId']));
+
+        if(professor.id <= 0) {
+          return const MaterialPage(child: LoginPage());
         } else {
-          return const MaterialPage(child: UnidadesCurricularesLayout());
+
+          if (state.params['ucId'] != null) {
+            return MaterialPage(child: DetalhesUnidadeCurricularLayout(ucId: state.params['ucId']));
+          } else {
+            return const MaterialPage(child: UnidadesCurricularesLayout());
+          }
+
         }
       },
     ),
 
     GoRoute(
       path: '/avaliacoes',
-      pageBuilder: (context, state) => const MaterialPage(child: AvaliacoesLayout()),
+      pageBuilder: (context, state) {
+
+          if(professor.id <= 0) {
+            return const MaterialPage(child: LoginPage());
+          } else {
+            return const MaterialPage(child: AvaliacoesLayout());
+          }
+
+      }
     ),
 
     GoRoute(
       path: '/avaliacoes/:avaliacaoId',
       pageBuilder: (context, state) {
-        if (state.params['avaliacaoId'] != null) {
-          return MaterialPage(child: DetalhesAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
+
+        if(professor.id <= 0) {
+          return const MaterialPage(child: LoginPage());
         } else {
-          return const MaterialPage(child: AvaliacoesLayout());
+          if (state.params['avaliacaoId'] != null) {
+            return MaterialPage(child: DetalhesAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
+          } else {
+            return const MaterialPage(child: AvaliacoesLayout());
+          }
         }
+
       },
     ),
 
     GoRoute(
       path: '/notificacoes',
-      pageBuilder: (context, state) => const MaterialPage(child: NotificacoesLayout()),
+      pageBuilder: (context, state) {
+
+          if(professor.id <= 0) {
+            return const MaterialPage(child: LoginPage());
+          } else {
+            return const MaterialPage(child: NotificacoesLayout());
+          }
+
+      }
     ),
 
     GoRoute(
       path: '/criar_avaliacao',
-      pageBuilder: (context, state) => const MaterialPage(child: CriarAvaliacaoLayout()),
+      pageBuilder: (context, state) {
+
+            if(professor.id <= 0) {
+              return const MaterialPage(child: LoginPage());
+            } else {
+              return const MaterialPage(child: CriarAvaliacaoLayout());
+            }
+
+      }
     ),
 
     GoRoute(
       path: '/editar_avaliacao/:avaliacaoId',
       pageBuilder: (context, state) {
+
         if (state.params['avaliacaoId'] != null) {
-          return MaterialPage(child: EditarAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
+          return MaterialPage(child: DetalhesAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
         } else {
-          return const MaterialPage(child: AvaliacoesLayout());
+          if (state.params['avaliacaoId'] != null) {
+            return MaterialPage(child: EditarAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
+          } else {
+            return const MaterialPage(child: AvaliacoesLayout());
+          }
         }
       },
     ),
