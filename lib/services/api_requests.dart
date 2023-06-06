@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:ontrack_backoffice/helpers/user_helper.dart';
 import 'package:ontrack_backoffice/models/Avaliacao.dart';
 import 'package:ontrack_backoffice/models/Notificacao.dart';
 
@@ -110,9 +111,12 @@ Future<Map<String, dynamic>> getUC(String id) async {
 
 Future<List<Widget>> getUCsProf(BuildContext context) async {
   // Id do professor
-  var idProf = 1;
+  var idProf = professor.id;
 
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidade_curricular'));
+  //var url = "${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidade_curricular";
+  var temp_url = "http://localhost:8094/api/v1/professor/${idProf}/unidades-curriculares/list";
+
+  var response = await http.get(Uri.parse('${temp_url}'));
   if (response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
     var jsonResponse = resultados.map((uc) => getUCWidgetFromJSON(context, uc)).toList();
@@ -125,7 +129,7 @@ Future<List<Widget>> getUCsProf(BuildContext context) async {
 
 Future<List<Widget>> getAvaliacoes(BuildContext context, String estado) async {
   // Id do professor
-  var idProf = 1;
+  var idProf = professor.id;
 
   var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'));
   if(response.statusCode == 200) {

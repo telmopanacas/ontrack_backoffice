@@ -134,7 +134,7 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
               ],
             ),
             SizedBox(height: 30),
-            buildAvaliacoesContainer(context, uc.name),
+            buildAvaliacoesContainer(context, uc.nome),
           ],
         ),
       ),
@@ -196,7 +196,7 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${uc.name}',
+                '${uc.nome}',
                 style: TextStyle(
                   overflow: TextOverflow.ellipsis,
                   fontSize: 23,
@@ -210,7 +210,7 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
                   text: 'Ano Letivo: ',
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
                   children: <TextSpan>[
-                    TextSpan(text: uc.ano, style: TextStyle(fontWeight: FontWeight.normal)),
+                    TextSpan(text: uc.anoLetivo.ano, style: TextStyle(fontWeight: FontWeight.normal)),
                   ],
                 ),
               ),
@@ -220,7 +220,7 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
                   text: 'Curso: ',
                   style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 17),
                   children: <TextSpan>[
-                    TextSpan(text: uc.curso, style: TextStyle(fontWeight: FontWeight.normal)),
+                    TextSpan(text: uc.curso.codigo, style: TextStyle(fontWeight: FontWeight.normal)),
                   ],
                 ),
               ),

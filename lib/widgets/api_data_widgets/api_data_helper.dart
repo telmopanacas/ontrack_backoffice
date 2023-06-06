@@ -169,7 +169,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
             ),
             child: Center(
                 child: Text(
-                  json['name'],
+                  json['nome'],
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -191,7 +191,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
                       text: 'Curso: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: json['curso'], style: TextStyle(fontWeight: FontWeight.normal)),
+                        TextSpan(text: json['curso']['codigo'], style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
@@ -201,7 +201,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
                       text: 'Ano Letivo: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: json['ano'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                        TextSpan(text: json['anoLetivo']['ano'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
