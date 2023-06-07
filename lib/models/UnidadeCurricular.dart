@@ -3,7 +3,7 @@ import 'package:ontrack_backoffice/models/AnoLetivo.dart';
 import 'package:ontrack_backoffice/models/Curso.dart';
 
 class UnidadeCurricular {
-  final String id;
+  final int id;
   final String nome;
   final String codigo;
   final String descricao;
@@ -22,7 +22,7 @@ class UnidadeCurricular {
 
   factory UnidadeCurricular.fromJson(Map<String, dynamic> json) {
     return UnidadeCurricular(
-      json['id'] as String,
+      json['id'] as int,
       json['nome'] as String,
       json['codigo'] as String,
       json['descricao'] as String,

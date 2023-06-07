@@ -147,7 +147,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   return InkWell(
     onTap: () {
       //TODO - Ir para os detalhes da UC
-      print('Carregou em UC: ${json['name']}');
+      print('Carregou em UC: ${json['nome']} com id: ${json['id']}');
       GoRouter.of(context).push('/ucs/${json['id']}');
     },
     child: Container(

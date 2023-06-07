@@ -1,5 +1,5 @@
 class AnoLetivo {
-  final String id;
+  final int id;
   final String ano;
 
   AnoLetivo(this.id, this.ano);
@@ -11,7 +11,7 @@ class AnoLetivo {
 
   factory AnoLetivo.fromJson(Map<String, dynamic> json) {
     return AnoLetivo(
-      json['id'] as String,
+      json['id'] as int,
       json['ano'] as String,
     );
   }

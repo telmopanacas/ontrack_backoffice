@@ -3,13 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:ontrack_backoffice/helpers/user_helper.dart';
+import 'package:ontrack_backoffice/helpers/persistencia_user.dart';
 import 'package:ontrack_backoffice/models/Avaliacao.dart';
 import 'package:ontrack_backoffice/models/Notificacao.dart';
 
 import '../widgets/api_data_widgets/api_data_helper.dart';
 
-const _servidorOnTrackAPIEndpoint = 'https://642eb0988ca0fe3352d63279.mockapi.io';
+const _servidorOnTrackAPIEndpoint = 'http://localhost:8094/api/v1';
 
 
 
@@ -64,18 +64,17 @@ Future<bool> deleteAvaliacao(int id) async {
 }
 
 Future<bool> createAvaliacao(Map<String, dynamic> avaliacao) async {
-  // Id do professor
-  var idProf = 1;
-
-  var response = await http.post(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'),
+  print(avaliacao);
+  var response = await http.post(Uri.parse('${_servidorOnTrackAPIEndpoint}/avaliacao/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(avaliacao));
-  if (response.statusCode == 201) {
+  if (response.statusCode == 200) {
+    print('Avaliação criada com sucesso.');
     return true;
   } else {
-    print('Request failed with status: ${response.statusCode}.');
+    print('Não foi possível criar avaliação ${response.statusCode}.');
     return false;
   }
 }
@@ -94,11 +93,12 @@ Future<Map<String, dynamic>> getAvaliacao(String id) async {
   }
 }
 
-Future<Map<String, dynamic>> getUC(String id) async {
-  // Id do professor
-  var idProf = 1;
+// Função usada na página detalhes da avaliação
+Future<Map<String, dynamic>> getUC(String unidadeCurricularId) async {
 
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidade_curricular/$id'));
+  var url = "${_servidorOnTrackAPIEndpoint}/unidade_curricular/${unidadeCurricularId}";
+
+  var response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
     return jsonResponse;
@@ -111,12 +111,11 @@ Future<Map<String, dynamic>> getUC(String id) async {
 
 Future<List<Widget>> getUCsProf(BuildContext context) async {
   // Id do professor
-  var idProf = professor.id;
+  var idProf = await getUserID();
 
-  //var url = "${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidade_curricular";
-  var temp_url = "http://localhost:8094/api/v1/professor/${idProf}/unidades-curriculares/list";
+  var url = "${_servidorOnTrackAPIEndpoint}/professor/${idProf}/unidades-curriculares/list";
 
-  var response = await http.get(Uri.parse('${temp_url}'));
+  var response = await http.get(Uri.parse(url));
   if (response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
     var jsonResponse = resultados.map((uc) => getUCWidgetFromJSON(context, uc)).toList();
@@ -129,7 +128,7 @@ Future<List<Widget>> getUCsProf(BuildContext context) async {
 
 Future<List<Widget>> getAvaliacoes(BuildContext context, String estado) async {
   // Id do professor
-  var idProf = professor.id;
+  var idProf = await getUserID();
 
   var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'));
   if(response.statusCode == 200) {
@@ -213,5 +212,48 @@ Future<List<Widget>> getEventosProfessorDiaX(BuildContext context, DateTime sele
   } else {
     print('Erro ao carregar os eventos do dia');
     return [];
+  }
+}
+
+/*
+Função utilizada na página de criação de avaliações
+ */
+Future<List<String>> getUnidadeCurricularesNomes() async {
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/list'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body) as List;
+    List<String> output = [];
+    jsonResponse.map((uc) {
+      output.add(uc['nome']);
+    }).toList();
+    return output;
+  } else {
+    print('Erro na função getUCeIdMap no ficheiro api_requests.dart');
+    return [];
+  }
+}
+
+/*
+Função que vai buscar todos as Unidades Curriculares do professor, vê se existe alguma com o mesmo nome passado
+e retorna o id dessa UC
+ */
+Future<int> getUCId(String nomeUC) async {
+  // Id do professor
+  var idProf = await getUserID();
+
+  var response = await http.get(Uri.parse(
+      '${_servidorOnTrackAPIEndpoint}/professor/${idProf}/unidades-curriculares/list'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body) as List;
+    int output = 0;
+    jsonResponse.map((uc) {
+      if (uc['nome'] == nomeUC) {
+        output = uc['id'];
+      }
+    }).toList();
+    return output;
+  } else {
+    print('Erro na função getUCeIdMap no ficheiro api_requests.dart');
+    return -1;
   }
 }

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import 'package:ontrack_backoffice/helpers/user_helper.dart';
 import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/animated_containers/proximas_avaliacoes.dart';

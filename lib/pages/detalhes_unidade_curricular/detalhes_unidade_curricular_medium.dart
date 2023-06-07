@@ -41,7 +41,6 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           UnidadeCurricular uc = UnidadeCurricular.fromJson(snapshot.data as Map<String, dynamic>);
-
           return Scaffold(
             appBar: buildAppBar(context, 'Unidades Curriculares'),
             //drawer: buildDrawer(context),

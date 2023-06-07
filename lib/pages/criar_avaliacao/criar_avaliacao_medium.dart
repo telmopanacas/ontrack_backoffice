@@ -21,13 +21,13 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
 
   //TODO: Ir à API buscar as unidades curriculares
   List<String> _unidadesCurriculares = [
-    'Unidade Curricular 1',
+    'Matemática 1',
     'Unidade Curricular 2',
     'Unidade Curricular 3',
     'Unidade Curricular 4',
     'Unidade Curricular 5'
   ];
-  String _selectedUnidadeCurricular = 'Unidade Curricular 1';
+  String _selectedUnidadeCurricular = '';
 
   //TODO: Ir à API buscar os tipos de avaliação
   List<String> _tiposAvaliacao = [
@@ -46,11 +46,20 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
   String _selectedMetodoEntrega = 'Moodle';
 
   @override
+  void initState()  {
+    super.initState();
+    getUnidadeCurricularesNomes().then((value) => setState(() {
+      _unidadesCurriculares = value;
+    }));
+  }
+
+
+  @override
   Widget build(BuildContext context) {
+    _selectedUnidadeCurricular = _unidadesCurriculares[0];
     unidadeCurricularController.text = _selectedUnidadeCurricular;
     tipoAvaliacaoController.text = _selectedTipoAvaliacao;
     metodoEntregaController.text = _selectedMetodoEntrega;
-
 
     return Scaffold(
         appBar: buildAppBar(context, 'Avaliações'),
@@ -402,8 +411,8 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
             ));
           } else {
             //TODO: Enviar para a base de dados
-
-            await createAvaliacao(toJson());
+            final ucId = await getUCId(unidadeCurricularController.text);
+            await createAvaliacao(toJson(ucId));
 
             //Clear dos text fields
             nomeAvaliacaoController.clear();
@@ -430,19 +439,20 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(int ucId) {
     final data = dataController.text.split(" ")[0];
     final hora = dataController.text.split(" ")[1];
-
+    final descrical = descricaoController.text;
+    print(descrical);
     return {
-      'name': nomeAvaliacaoController.text,
-      'data_realizacao': data,
-      'hora_realizacao': hora,
-      'estado': 'A decorrer',
-      'metodo_entrega': metodoEntregaController.text,
-      'tipo': tipoAvaliacaoController.text,
-      //Por agora está o nome da UC, mas depois será o id
-      'ucId': unidadeCurricularController.text,
+      'nome': nomeAvaliacaoController.text,
+      'data': data,
+      'hora': hora,
+      'tipoDeAvaliacao': tipoAvaliacaoController.text,
+      'metodoDeEntrega': metodoEntregaController.text,
+      'unidadeCurricular': {
+        'id': ucId,
+      },
       'descricao': descricaoController.text,
     };
   }
