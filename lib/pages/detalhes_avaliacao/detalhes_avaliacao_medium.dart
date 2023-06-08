@@ -22,7 +22,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
   Widget build(BuildContext context) {
 
     return FutureBuilder(
-      future: getAvaliacao(widget.avaliacaoId!),
+      future: getJsonAvaliacao(widget.avaliacaoId!),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);

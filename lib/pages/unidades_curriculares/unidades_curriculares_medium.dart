@@ -126,7 +126,7 @@ class _UnidadesCurricularesMediumState extends State<UnidadesCurricularesMedium>
         maxHeight: MediaQuery.of(context).size.height * 0.4,
       ),
       child: FutureBuilder(
-        future: getUCProfByAnoLetivo(context, _selectedAno),
+        future: getWidgetsUCProfByAnoLetivo(context, _selectedAno),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if(snapshot.data.toString() == '[]') {

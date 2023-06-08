@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/models/Notificacao.dart';
 import 'dart:math' as math;
 
@@ -50,10 +51,21 @@ Widget getNotificacaoWidget(Notificacao notificacao){
 
 Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   double larguraCard = 190;
+
+  String estado = "";
+  String dataAvaliacaoString = json['data'];
+  DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+  DateTime dataAvaliacao = inputFormat.parse(dataAvaliacaoString);
+  if(dataAvaliacao.isAfter(DateTime.now())){
+    estado = "A decorrer";
+  } else {
+    estado = "Terminada";
+  }
+
   return InkWell(
     onTap: () {
       //TODO - Ir para os detalhes da avaliação
-      print('Carregou na avaliação: ${json['name']}');
+      print('Carregou na avaliação: ${json['nome']}');
       GoRouter.of(context).push('/avaliacoes/${json['id']}');
     },
     child: Container(
@@ -75,7 +87,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
             ),
             child: Center(
                 child: Text(
-                  json['name'],
+                  json['nome'],
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
@@ -97,7 +109,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       text: 'Estado: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: json['estado'], style: TextStyle(fontWeight: FontWeight.normal, decoration: TextDecoration.underline)),
+                        TextSpan(text: estado, style: TextStyle(fontWeight: FontWeight.normal, decoration: TextDecoration.underline)),
                       ],
                     ),
                   ),
@@ -107,7 +119,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       text: 'Data: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: json['data_realizacao'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                        TextSpan(text: json['data'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
@@ -117,7 +129,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       text: 'Hora: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: json['hora_realizacao'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                        TextSpan(text: json['hora'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
@@ -127,7 +139,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       text: 'UC: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: json['ucId'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                        TextSpan(text: json['unidadeCurricular']['nome'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
@@ -232,7 +244,7 @@ Widget getHomeAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic
     child: InkWell(
       onTap: () {
         //TODO - Ir para os detalhes do evento
-        print('Carregou em evento: ${json['name']}');
+        print('Carregou em evento: ${json['nome']}');
         GoRouter.of(context).push('/avaliacoes/${json['id']}');
       },
       child: Container(
@@ -255,7 +267,7 @@ Widget getHomeAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic
                   children: [
                     //Usado Expanded para não dar overflow
                     Expanded(
-                      child: Text('${json['name']}',
+                      child: Text('${json['nome']}',
                         style: TextStyle(
                           overflow: TextOverflow.ellipsis,
                           fontSize: 16,
@@ -277,7 +289,7 @@ Widget getHomeAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic
                         Icon(Icons.class_outlined, size: 15,),
                         SizedBox(width: 5,),
                         //Usado Expanded para não dar overflow
-                        Expanded(child: Text('${json['tipo']}', style: TextStyle(overflow: TextOverflow.ellipsis),)),
+                        Expanded(child: Text('${json['tipoDeAvaliacao']}', style: TextStyle(overflow: TextOverflow.ellipsis),)),
                       ],
                     ),
                   ),
@@ -289,7 +301,7 @@ Widget getHomeAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic
                         Icon(Icons.insert_invitation_outlined, size: 15,),
                         SizedBox(width: 5,),
                         //Usado Expanded para não dar overflow
-                        Expanded(child: Text('${json['data_realizacao']}', style: TextStyle(overflow: TextOverflow.ellipsis),)),
+                        Expanded(child: Text('${json['data']}', style: TextStyle(overflow: TextOverflow.ellipsis),)),
                       ],
                     ),
                   ),

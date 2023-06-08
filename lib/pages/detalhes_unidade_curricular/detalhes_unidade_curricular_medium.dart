@@ -15,29 +15,16 @@ class DetalhesUnidadeCurricularMedium extends StatefulWidget {
 }
 
 class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricularMedium> {
-  List<String> alunos = [
+  List<String> alunosTemp = [
     "João Pedro - a22001972",
     "Maria Silva - a22002345",
     "Pedro Costa - a22005789",
-    "Ana Luiza - a22001234",
-    "Fernando Souza - a22009876",
-    "Mariana Santos - a22005432",
-    "Lucas Oliveira - a22006543",
-    "Isabela Almeida - a22003456",
-    "Rafaela Carvalho - a22008765",
-    "Gabriel Vieira - a22007890",
-    "Luiz Felipe - a22007654",
-    "Amanda Ribeiro - a22004321",
-    "Juliana Costa - a22005678",
-    "Thiago Oliveira - a22004567",
-    "Carla Santos - a22009987",
   ];
-
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: getUC(widget.ucId!),
+      future: getJsonUC(widget.ucId!),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           UnidadeCurricular uc = UnidadeCurricular.fromJson(snapshot.data as Map<String, dynamic>);
@@ -133,14 +120,14 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
               ],
             ),
             SizedBox(height: 30),
-            buildAvaliacoesContainer(context, uc.nome),
+            buildAvaliacoesContainer(context, uc.id),
           ],
         ),
       ),
     );
   }
 
-  Container buildAvaliacoesContainer(BuildContext context, String ucID) {
+  Container buildAvaliacoesContainer(BuildContext context, int ucID) {
     return Container(
         constraints: BoxConstraints(
           maxHeight: MediaQuery
@@ -149,7 +136,7 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
               .height * 0.4,
         ),
         child: FutureBuilder(
-            future: getAvaliacoesByUC(context, ucID),
+            future: getWidgetsAvaliacoesByUC(context, ucID),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data.toString() == '[]') {
@@ -254,22 +241,47 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
                         Flexible(
                           child: Container(
                             width: 240,
-
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: alunos.length,
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Text(alunos[index], style: TextStyle(fontSize: 17),),
-                                );
+                            child: FutureBuilder<List<String>>(
+                              future: getListaAlunosUC(uc.id), // Função para buscar a lista de alunos da API
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  if(snapshot.data.toString() == '[]'){
+                                    return Text(
+                                      'Não tem alunos inscritos',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 17,
+                                      ),
+                                    );
+                                  }
+                                  else {
+                                    var alunos = snapshot.data;
+                                    return ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: alunos!.length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Text(
+                                            alunos[index],
+                                            style: TextStyle(fontSize: 17),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  }
+                                } else if (snapshot.hasError) {
+                                  return Text("Erro ao carregar os alunos");
+                                }
+                                // Exibe um indicador de progresso enquanto os dados estão sendo carregados
+                                return CircularProgressIndicator();
                               },
                             ),
-
                           ),
                         ),
 
-                      ],
+
+                    ],
                     ),
                   ),
                 ),
@@ -280,4 +292,6 @@ class _DetalhesUnidadeCurricularMediumState extends State<DetalhesUnidadeCurricu
       )
     );
   }
+
+
 }

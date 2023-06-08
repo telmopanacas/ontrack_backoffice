@@ -11,9 +11,40 @@ import '../widgets/api_data_widgets/api_data_helper.dart';
 
 const _servidorOnTrackAPIEndpoint = 'http://localhost:8094/api/v1';
 
+Future<List<Map<String, dynamic>>> getJsonListEventosProfID(BuildContext context) async {
+  // Id do professor
+  var idProf = await getUserID();
 
+  /*
+  1 - Obter os Ids das unidades curriculares do professor
+  2 - Ir a cada unidade curricular e obter as avaliações e meter numa lista
+  */
 
-Future<List<Widget>> getNotificacoes(String order) async {
+  var unidadesCurricularesIds = [];
+  var respostaUnidadesCurriculares = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidades-curriculares/list'));
+
+  if (respostaUnidadesCurriculares.statusCode == 200) {
+    var resultados = jsonDecode(respostaUnidadesCurriculares.body) as List;
+    var avaliacoes = [];
+
+    for (var uc in resultados) {
+      var idAvaliacao = uc['id'];
+      var respostaAvaliacoes = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/$idAvaliacao/avaliacoes/list'));
+      if (respostaAvaliacoes.statusCode == 200) {
+        var resultadosAvaliacoes = jsonDecode(respostaAvaliacoes.body) as List;
+        avaliacoes.addAll(resultadosAvaliacoes);
+      } else {
+        print('Erro ao obter as avaliações do professor na home page: ${respostaAvaliacoes.statusCode}.');
+      }
+    }
+    return avaliacoes.cast<Map<String, dynamic>>();
+  } else {
+    print('Erro ao obter as unidades curriculares do professor na home page: ${respostaUnidadesCurriculares.statusCode}.');
+    return [];
+  }
+}
+
+Future<List<Widget>> getWidgetNotificacoes(String order) async {
   var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/notificacao'));
   if(response.statusCode == 200) {
     var resultados = jsonDecode(response.body) as List;
@@ -79,7 +110,7 @@ Future<bool> createAvaliacao(Map<String, dynamic> avaliacao) async {
   }
 }
 
-Future<Map<String, dynamic>> getAvaliacao(String id) async {
+Future<Map<String, dynamic>> getJsonAvaliacao(String id) async {
   // Id do professor
   var idProf = 1;
 
@@ -94,7 +125,7 @@ Future<Map<String, dynamic>> getAvaliacao(String id) async {
 }
 
 // Função usada na página detalhes da avaliação
-Future<Map<String, dynamic>> getUC(String unidadeCurricularId) async {
+Future<Map<String, dynamic>> getJsonUC(String unidadeCurricularId) async {
 
   var url = "${_servidorOnTrackAPIEndpoint}/unidade_curricular/${unidadeCurricularId}";
 
@@ -109,7 +140,7 @@ Future<Map<String, dynamic>> getUC(String unidadeCurricularId) async {
 }
 
 
-Future<List<Widget>> getUCsProf(BuildContext context) async {
+Future<List<Widget>> getWidgetsUCsProf(BuildContext context) async {
   // Id do professor
   var idProf = await getUserID();
 
@@ -126,50 +157,82 @@ Future<List<Widget>> getUCsProf(BuildContext context) async {
   }
 }
 
-Future<List<Widget>> getAvaliacoes(BuildContext context, String estado) async {
+Future<List<Widget>> getWidgetsAvaliacoes(BuildContext context, String estado) async {
+  /*
+  1 - Obter as avaliações do professor
+  2 - Ver se a data da avaliação é depois da data atual
+  3 - Se sim, adicionar à lista de avaliações e chamar a função getAvaliacoesWidgetFromJSON
+   */
+
+  var avaliacoes = await getJsonListEventosProfID(context);
+  var output = [];
+  if(estado == 'A decorrer') {
+    for(var avaliacao in avaliacoes) {
+      String dataAvaliacaoString = avaliacao['data'];
+      DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+      DateTime dataAvaliacao = inputFormat.parse(dataAvaliacaoString);
+      if(dataAvaliacao.isAfter(DateTime.now())) {
+        output.add(getAvaliacoesWidgetFromJSON(context, avaliacao));
+      }
+    }
+  }else {
+    for(var avaliacao in avaliacoes) {
+      String dataAvaliacaoString = avaliacao['data'];
+      DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+      DateTime dataAvaliacao = inputFormat.parse(dataAvaliacaoString);
+      if(dataAvaliacao.isBefore(DateTime.now())) {
+        output.add(getAvaliacoesWidgetFromJSON(context, avaliacao));
+      }
+    }
+  }
+
+  return output.cast<Widget>();
+}
+
+Future<List<Widget>> getWidgetsAvaliacoesByUC(BuildContext context, int ucId) async {
+
+  /*
+  1 - Obter a unidade curricular com o id = ucId
+  2 - Obter as avaliações dessa unidade curricular
+  3 - Ver quais as avaliações que estão a decorrer (o dia da avaliação ainda não passou)
+  4 - Criar os widgets das avaliações e meter numa lista
+   */
+  var respostaUnidadeCurricular = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/$ucId'));
+  var output = [];
+  if(respostaUnidadeCurricular.statusCode == 200) {
+    var respostaAvaliacoes = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/${ucId}/avaliacoes/list'));
+    if(respostaAvaliacoes.statusCode == 200) {
+      var avaliacoes = jsonDecode(respostaAvaliacoes.body) as List;
+      for(var avaliacao in avaliacoes) {
+        String dataAvaliacaoString = avaliacao['data'];
+        DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+        DateTime dataAvaliacao = inputFormat.parse(dataAvaliacaoString);
+        if(dataAvaliacao.isAfter(DateTime.now())) {
+          output.add(getAvaliacoesWidgetFromJSON(context, avaliacao));
+        }
+      }
+    }else {
+      print('Erro ao obter as avaliações da unidade curricular: ${respostaAvaliacoes.statusCode}.');
+      return [];
+    }
+    return output.cast<Widget>();
+  }else {
+    print('Erro ao a unidade curricular: ${respostaUnidadeCurricular.statusCode}.');
+    return [];
+  }
+
+}
+
+Future<List<Widget>> getWidgetsUCProfByAnoLetivo(BuildContext context, String anoLetivo) async {
   // Id do professor
   var idProf = await getUserID();
 
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'));
-  if(response.statusCode == 200) {
-    var resultados = jsonDecode(response.body) as List;
-    var jsonResponse = resultados.where((avaliacao) => avaliacao['estado'] == estado)
-                                  .map((avaliacao) => getAvaliacoesWidgetFromJSON(context, avaliacao))
-                                  .toList();
-    return jsonResponse;
-  }else {
-    print('Request failed with status: ${response.statusCode}.');
-    return [];
-  }
-}
-
-Future<List<Widget>> getAvaliacoesByUC(BuildContext context, String ucId) async {
-  // Id do professor
-  var idProf = 1;
-
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'));
-  if(response.statusCode == 200) {
-    var resultados = jsonDecode(response.body) as List;
-    var jsonResponse = resultados.where((avaliacao) => avaliacao['estado'] == 'A decorrer' && avaliacao['ucId'] == ucId)
-        .map((avaliacao) => getAvaliacoesWidgetFromJSON(context, avaliacao))
-        .toList();
-    return jsonResponse;
-  }else {
-    print('Request failed with status: ${response.statusCode}.');
-    return [];
-  }
-}
-
-Future<List<Widget>> getUCProfByAnoLetivo(BuildContext context, String anoLetivo) async {
-  // Id do professor
-  var idProf = 1;
-
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidade_curricular'));
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/${idProf}/unidades-curriculares/list'));
   if (response.statusCode == 200) {
     List<Widget> output = [];
     var resultados = jsonDecode(response.body) as List;
     resultados.map((uc) {
-      if(uc['ano'] == anoLetivo){
+      if(uc['anoLetivo']['ano'] == anoLetivo){
         output.add(getUCWidgetFromJSON(context, uc));
       }
     }).toList();
@@ -180,45 +243,61 @@ Future<List<Widget>> getUCProfByAnoLetivo(BuildContext context, String anoLetivo
   }
 }
 
-Future<List<Widget>> getEventosProfID(BuildContext context) async {
+Future<List<Widget>> getWidgetsAvaliacoesProfID(BuildContext context) async {
   // Id do professor
-  var idProf = 1;
+  var idProf = await getUserID();
 
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'));
-  if (response.statusCode == 200) {
-    var resultados = jsonDecode(response.body) as List;
-    var jsonResponse = resultados.map((evento) => getHomeAvaliacoesWidgetFromJSON(context, evento, Colors.white)).toList();
-    return jsonResponse;
-  } else {
-    print('Request failed with status: ${response.statusCode}.');
-    return [];
-  }
-}
+  /*
+  1 - Obter os Ids das unidades curriculares do professor
+  2 - Ir a cada unidade curricular e obter as avaliações e meter numa lista
+  3 - Chamar a função getHomeAvaliacoesWidgetFromJSON para cada avaliação
+   */
 
-Future<List<Widget>> getEventosProfessorDiaX(BuildContext context, DateTime selectedDay) async{
-  // Id do professor
-  var idProf = 1;
+  var unidadesCurricularesIds = [];
+  var respostaUnidadesCurriculares = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidades-curriculares/list'));
 
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao'));
-  if (response.statusCode == 200) {
-    List<Widget> output = [];
-    var resultados = jsonDecode(response.body) as List;
-    resultados.map((evento)  {
-      if(evento['data_realizacao'] == DateFormat('dd/MM/yyyy').format(DateTime(selectedDay.year, selectedDay.month, selectedDay.day))){
-        output.add(getHomeAvaliacoesWidgetFromJSON(context, evento, Colors.grey[300]));
+  if(respostaUnidadesCurriculares.statusCode == 200) {
+    var resultados = jsonDecode(respostaUnidadesCurriculares.body) as List;
+    var avaliacoes = [];
+
+    for(var uc in resultados) {
+      var ucId = uc['id'];
+      var respostaAvaliacoes = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/${ucId}/avaliacoes/list'));
+      if(respostaAvaliacoes.statusCode == 200) {
+        var resultados = jsonDecode(respostaAvaliacoes.body) as List;
+        for(var avaliacao in resultados) {
+          avaliacoes.add(getHomeAvaliacoesWidgetFromJSON(context, avaliacao, Colors.white));
+        }
+      }else {
+        print('Erro ao obter as avaliações do professor na home page: ${respostaAvaliacoes.statusCode}.');
       }
-    }).toList();
-    return output;
-  } else {
-    print('Erro ao carregar os eventos do dia');
+    }
+    return avaliacoes.cast<Widget>();
+  }else {
+    print('Erro ao obter as unidades curriculares do professor na home page: ${respostaUnidadesCurriculares.statusCode}.');
     return [];
   }
 }
+
+Future<List<Widget>> getWidgetsEventosProfessorDiaX(BuildContext context, DateTime selectedDay) async{
+  // Id do professor
+
+  var avaliacoes = await getJsonListEventosProfID(context);
+  var output = [];
+  for (var avaliacao in avaliacoes) {
+    if(avaliacao['data'] == DateFormat('dd/MM/yyyy').format(DateTime(selectedDay.year, selectedDay.month, selectedDay.day))){
+      output.add(getHomeAvaliacoesWidgetFromJSON(context, avaliacao, Colors.grey[300]));
+    }
+  }
+  return output.cast<Widget>();
+}
+
+
 
 /*
 Função utilizada na página de criação de avaliações
  */
-Future<List<String>> getUnidadeCurricularesNomes() async {
+Future<List<String>> getNomesUnidadeCurriculares() async {
   var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/list'));
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body) as List;
@@ -255,5 +334,26 @@ Future<int> getUCId(String nomeUC) async {
   } else {
     print('Erro na função getUCeIdMap no ficheiro api_requests.dart');
     return -1;
+  }
+}
+
+
+/*
+Função que vai buscar todos os alunos de uma Unidade Curricular
+ */
+Future<List<String>> getListaAlunosUC(int idUC) async {
+  var response = await http.get(Uri.parse(
+      '${_servidorOnTrackAPIEndpoint}/unidade_curricular/${idUC}'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body);
+    var alunos = jsonResponse['alunos'] as List;
+    List<String> output = [];
+    alunos.map((aluno) {
+      output.add(aluno['nome']+ ' - ' + aluno['email'].split('@')[0]);
+    }).toList();
+    return output;
+  } else {
+    print('Erro na função getListaAlunosUC no ficheiro api_requests.dart');
+    return [];
   }
 }

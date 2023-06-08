@@ -151,7 +151,7 @@ class _AvaliacoesMediumState extends State<AvaliacoesMedium> {
         maxHeight: MediaQuery.of(context).size.height * 0.4,
       ),
       child: FutureBuilder(
-        future: getAvaliacoes(context, _selectedEstado),
+        future: getWidgetsAvaliacoes(context, _selectedEstado),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             if(snapshot.data.toString() == '[]') {

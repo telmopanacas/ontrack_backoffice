@@ -88,7 +88,7 @@ class _NotificacoesMediumState extends State<NotificacoesMedium> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         FutureBuilder(
-                          future: getNotificacoes(_selectedEstado),
+                          future: getWidgetNotificacoes(_selectedEstado),
                           builder: (context, snapshot) {
                             if(snapshot.hasData) {
                               return ListView.builder(

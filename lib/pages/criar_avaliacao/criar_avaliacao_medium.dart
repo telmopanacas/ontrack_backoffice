@@ -48,7 +48,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
   @override
   void initState()  {
     super.initState();
-    getUnidadeCurricularesNomes().then((value) => setState(() {
+    getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
     }));
   }
