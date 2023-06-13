@@ -51,7 +51,6 @@ Widget getNotificacaoWidget(Notificacao notificacao){
 
 Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
   double larguraCard = 190;
-
   String estado = "";
   String dataAvaliacaoString = json['data'];
   DateFormat inputFormat = DateFormat("dd/MM/yyyy");
@@ -66,7 +65,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
     onTap: () {
       //TODO - Ir para os detalhes da avaliação
       print('Carregou na avaliação: ${json['nome']}');
-      GoRouter.of(context).push('/avaliacoes/${json['id']}');
+      GoRouter.of(context).push('/avaliacoes/${json['id'].toString()}');
     },
     child: Container(
       height: 170,

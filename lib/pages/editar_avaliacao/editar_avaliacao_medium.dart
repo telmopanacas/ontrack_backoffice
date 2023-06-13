@@ -25,13 +25,13 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
 
   //TODO: Ir à API buscar as unidades curriculares
   List<String> _unidadesCurriculares = [
-    'Unidade Curricular 1',
+    'Matemática 1',
     'Unidade Curricular 2',
     'Unidade Curricular 3',
     'Unidade Curricular 4',
     'Unidade Curricular 5'
   ];
-  String _selectedUnidadeCurricular = 'Unidade Curricular 1';
+  String _selectedUnidadeCurricular = '';
 
   //TODO: Ir à API buscar os tipos de avaliação
   List<String> _tiposAvaliacao = [
@@ -49,23 +49,31 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   List<String> _metodosEntrega = ['Moodle', 'Email', 'Presencial'];
   String _selectedMetodoEntrega = 'Moodle';
 
+  void initState()  {
+    super.initState();
+    getNomesUnidadeCurriculares().then((value) => setState(() {
+      _unidadesCurriculares = value;
+    }));
+  }
+
   @override
   Widget build(BuildContext context) {
+    _selectedUnidadeCurricular = _unidadesCurriculares[0];
 
     return FutureBuilder(
       future: getJsonAvaliacao(widget.avaliacaoId!),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);
-          _selectedTipoAvaliacao = avaliacao.tipo;
+          _selectedTipoAvaliacao = avaliacao.tipoDeAvaliacao;
           _selectedUnidadeCurricular = avaliacao.ucId;
-          _selectedMetodoEntrega = avaliacao.metodo_entrega;
+          _selectedMetodoEntrega = avaliacao.metodoDeEntrega;
 
           _idAvaliacao = avaliacao.id;
           nomeAvaliacaoController.text = avaliacao.name;
           tipoAvaliacaoController.text = _selectedTipoAvaliacao;
           unidadeCurricularController.text = _selectedUnidadeCurricular;
-          dataController.text = '${avaliacao.data_realizacao} ${avaliacao.hora_realizacao}';
+          dataController.text = '${avaliacao.data} ${avaliacao.hora}';
           metodoEntregaController.text = _selectedMetodoEntrega;
           descricaoController.text = avaliacao.descricao;
 

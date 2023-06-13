@@ -85,7 +85,7 @@ Future<bool> deleteAvaliacao(int id) async {
   // Id do professor
   var idProf = 1;
 
-  var response = await http.delete(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao/$id'));
+  var response = await http.delete(Uri.parse('${_servidorOnTrackAPIEndpoint}/avaliacao/delete/$id'));
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -111,10 +111,7 @@ Future<bool> createAvaliacao(Map<String, dynamic> avaliacao) async {
 }
 
 Future<Map<String, dynamic>> getJsonAvaliacao(String id) async {
-  // Id do professor
-  var idProf = 1;
-
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao/$id'));
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/avaliacao/$id'));
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
     return jsonResponse;
@@ -163,7 +160,6 @@ Future<List<Widget>> getWidgetsAvaliacoes(BuildContext context, String estado) a
   2 - Ver se a data da avaliação é depois da data atual
   3 - Se sim, adicionar à lista de avaliações e chamar a função getAvaliacoesWidgetFromJSON
    */
-
   var avaliacoes = await getJsonListEventosProfID(context);
   var output = [];
   if(estado == 'A decorrer') {

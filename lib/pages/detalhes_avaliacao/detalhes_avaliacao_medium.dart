@@ -18,15 +18,15 @@ class DetalhesAvaliacaoMedium extends StatefulWidget {
 }
 
 class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
+
   @override
   Widget build(BuildContext context) {
-
     return FutureBuilder(
       future: getJsonAvaliacao(widget.avaliacaoId!),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);
-          final data_realizacao = DateFormat('dd/MM/yyyy').parse(avaliacao.data_realizacao);
+          final data_realizacao = DateFormat('dd/MM/yyyy').parse(avaliacao.data);
           final alturaDetalhes = 400.0;
           return Scaffold(
             appBar: buildAppBar(context, 'Avaliações'),
@@ -261,7 +261,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Tipo de avaliação: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao.tipo, style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.tipoDeAvaliacao, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
             ),
@@ -270,7 +270,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Método de entrega: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao.metodo_entrega, style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.metodoDeEntrega, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
             ),
@@ -288,7 +288,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Hora de realização: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao.hora_realizacao, style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: avaliacao.hora, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               )
             ),

@@ -64,7 +64,6 @@ final routes = GoRouter(
     GoRoute(
       path: '/avaliacoes/:avaliacaoId',
       pageBuilder: (context, state) {
-
           if (state.params['avaliacaoId'] != null) {
             return MaterialPage(child: DetalhesAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
           } else {
@@ -89,14 +88,11 @@ final routes = GoRouter(
       pageBuilder: (context, state) {
 
         if (state.params['avaliacaoId'] != null) {
-          return MaterialPage(child: DetalhesAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
+          return MaterialPage(child: EditarAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
         } else {
-          if (state.params['avaliacaoId'] != null) {
-            return MaterialPage(child: EditarAvaliacaoLayout(avaliacaoId: state.params['avaliacaoId']));
-          } else {
-            return const MaterialPage(child: AvaliacoesLayout());
-          }
+          return const MaterialPage(child: AvaliacoesLayout());
         }
+
       },
     ),
   ],

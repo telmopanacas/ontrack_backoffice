@@ -1,65 +1,62 @@
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+
 class Avaliacao {
-  final int _createdAt;
-  final String _name;
-  final String _data_realizacao;
-  final String _estado;
-  final String _metodo_entrega;
-  final String _tipo;
-  final String _ucId;
-  final String _descricao;
-  final String _hora_realizacao;
   final String _id;
-  final String _professorId;
+  final String _name;
+  final String _tipoDeAvaliacao;
+  final String _metodoDeEntrega;
+  final String _data;
+  final String _hora;
+  final String _descricao;
+  final String _ucId;
+  final String _estado;
 
   Avaliacao(
-      this._createdAt,
-      this._name,
-      this._data_realizacao,
-      this._estado,
-      this._metodo_entrega,
-      this._tipo,
-      this._ucId,
-      this._descricao,
-      this._hora_realizacao,
       this._id,
-      this._professorId
+      this._name,
+      this._tipoDeAvaliacao,
+      this._metodoDeEntrega,
+      this._data,
+      this._hora,
+      this._descricao,
+      this._ucId,
+      this._estado,
       );
 
   factory Avaliacao.fromJson(Map<String, dynamic> json) {
+    String dataAvaliacaoString = json['data'];
+    DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+    DateTime dataAvaliacao = inputFormat.parse(dataAvaliacaoString);
+
     return Avaliacao(
-      json['createdAt'],
-      json['name'],
-      json['data_realizacao'],
-      json['estado'],
-      json['metodo_entrega'],
-      json['tipo'],
-      json['ucId'],
+      json['id'].toString(),
+      json['nome'],
+      json['tipoDeAvaliacao'],
+      json['metodoDeEntrega'],
+      json['data'],
+      json['hora'],
       json['descricao'],
-      json['hora_realizacao'],
-      json['id'],
-      json['professorId']
+      json['unidadeCurricular']['id'].toString(),
+      dataAvaliacao.isAfter(DateTime.now()) ? 'A decorrer' : 'Terminada',
     );
   }
 
-  String get professorId => _professorId;
-
-  String get id => _id;
-
-  String get hora_realizacao => _hora_realizacao;
-
-  String get descricao => _descricao;
+  String get estado => _estado;
 
   String get ucId => _ucId;
 
-  String get tipo => _tipo;
+  String get descricao => _descricao;
 
-  String get metodo_entrega => _metodo_entrega;
+  String get hora => _hora;
 
-  String get estado => _estado;
+  String get data => _data;
 
-  String get data_realizacao => _data_realizacao;
+  String get metodoDeEntrega => _metodoDeEntrega;
+
+  String get tipoDeAvaliacao => _tipoDeAvaliacao;
 
   String get name => _name;
 
-  int get createdAt => _createdAt;
+  String get id => _id;
 }
