@@ -56,6 +56,8 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     }));
   }
 
+  var avaliacao2;
+
   @override
   Widget build(BuildContext context) {
     _selectedUnidadeCurricular = _unidadesCurriculares[0];
@@ -65,11 +67,10 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
       builder: (context, snapshot) {
         if(snapshot.hasData) {
           Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);
-          _selectedTipoAvaliacao = avaliacao.tipoDeAvaliacao;
-          _selectedUnidadeCurricular = avaliacao.ucId;
-          _selectedMetodoEntrega = avaliacao.metodoDeEntrega;
-
           _idAvaliacao = avaliacao.id;
+
+          _selectedTipoAvaliacao = avaliacao.tipoDeAvaliacao;
+          _selectedMetodoEntrega = avaliacao.metodoDeEntrega;
           nomeAvaliacaoController.text = avaliacao.name;
           tipoAvaliacaoController.text = _selectedTipoAvaliacao;
           unidadeCurricularController.text = _selectedUnidadeCurricular;
@@ -435,9 +436,8 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
               backgroundColor: Colors.red,
             ));
           } else {
-            //TODO: Enviar para a base de dados
-
-            await updateAvaliacao(toJson());
+            final ucId = await getUCId(unidadeCurricularController.text);
+            await updateAvaliacao(toJson(ucId));
             //Clear dos text fields
             nomeAvaliacaoController.clear();
             unidadeCurricularController.clear();
@@ -463,21 +463,22 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     );
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson(int ucId) {
     final data = dataController.text.split(" ")[0];
     final hora = dataController.text.split(" ")[1];
-
+    final descrical = descricaoController.text;
+    print(descrical);
     return {
       'id': _idAvaliacao,
-      'name': nomeAvaliacaoController.text,
-      'data_realizacao': data,
-      'hora_realizacao': hora,
-      'estado': 'A decorrer',
-      'metodo_entrega': metodoEntregaController.text,
-      'tipo': tipoAvaliacaoController.text,
-      //Por agora está o nome da UC, mas depois será o id
-      'ucId': unidadeCurricularController.text,
+      'nome': nomeAvaliacaoController.text,
+      'tipoDeAvaliacao': tipoAvaliacaoController.text,
+      'metodoDeEntrega': metodoEntregaController.text,
+      'data': data,
+      'hora': hora,
       'descricao': descricaoController.text,
+      'unidadeCurricular': {
+        'id': ucId,
+      },
     };
   }
 }

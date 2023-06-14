@@ -65,14 +65,9 @@ Future<List<Widget>> getWidgetNotificacoes(String order) async {
 }
 
 Future<bool> updateAvaliacao(Map<String, dynamic> avaliacao) async {
-  // Id do professor
-  var idProf = 1;
 
-  var response = await http.put(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/evento_avaliacao/${avaliacao['id']}'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(avaliacao));
+  var params = "?nome=${avaliacao['nome']}&tipoDeAvaliacao=${avaliacao['tipoDeAvaliacao']}&metodoDeEntrega=${avaliacao['metodoDeEntrega']}&data=${avaliacao['data']}&hora=${avaliacao['hora']}&descricao=${avaliacao['descricao']}&unidadeCurricularId=${avaliacao['unidadeCurricular']['id']}";
+  var response = await http.put(Uri.parse('${_servidorOnTrackAPIEndpoint}/avaliacao/${avaliacao['id']}${params}'));
   if (response.statusCode == 200) {
     return true;
   } else {
@@ -95,7 +90,7 @@ Future<bool> deleteAvaliacao(int id) async {
 }
 
 Future<bool> createAvaliacao(Map<String, dynamic> avaliacao) async {
-  print(avaliacao);
+
   var response = await http.post(Uri.parse('${_servidorOnTrackAPIEndpoint}/avaliacao/new'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
