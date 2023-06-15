@@ -18,14 +18,13 @@ class EditarAvaliacaoMedium extends StatefulWidget {
 }
 
 class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
-
   double _larguraTextFields = 400;
 
   String _idAvaliacao = '-1';
 
-  //TODO: Ir à API buscar as unidades curriculares
+
   List<String> _unidadesCurriculares = [
-    'Matemática 1',
+    'Unidade Curricular 1',
     'Unidade Curricular 2',
     'Unidade Curricular 3',
     'Unidade Curricular 4',
@@ -33,30 +32,27 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   ];
   String _selectedUnidadeCurricular = '';
 
-  //TODO: Ir à API buscar os tipos de avaliação
   List<String> _tiposAvaliacao = [
     'Projeto',
     'Mini-Projeto',
     'Defesa',
-    'Teste',
+    'Frequência',
     'Mini-Teste',
     'Exame',
     'Apresentação'
   ];
   String _selectedTipoAvaliacao = 'Projeto';
 
-  //TODO: Ir à API buscar os métodos de entrega
   List<String> _metodosEntrega = ['Moodle', 'Email', 'Presencial'];
   String _selectedMetodoEntrega = 'Moodle';
 
+  var init = false;
   void initState()  {
     super.initState();
     getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
     }));
   }
-
-  var avaliacao2;
 
   @override
   Widget build(BuildContext context) {
@@ -66,17 +62,25 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
       future: getJsonAvaliacao(widget.avaliacaoId!),
       builder: (context, snapshot) {
         if(snapshot.hasData) {
-          Avaliacao avaliacao = Avaliacao.fromJson(snapshot.data as Map<String, dynamic>);
-          _idAvaliacao = avaliacao.id;
 
-          _selectedTipoAvaliacao = avaliacao.tipoDeAvaliacao;
-          _selectedMetodoEntrega = avaliacao.metodoDeEntrega;
-          nomeAvaliacaoController.text = avaliacao.name;
-          tipoAvaliacaoController.text = _selectedTipoAvaliacao;
-          unidadeCurricularController.text = _selectedUnidadeCurricular;
-          dataController.text = '${avaliacao.data} ${avaliacao.hora}';
-          metodoEntregaController.text = _selectedMetodoEntrega;
-          descricaoController.text = avaliacao.descricao;
+          /*
+          * Se ainda não tiver sido inicializado, inicializa os campos com os dados da avaliação
+           */
+          if(!init) {
+            Avaliacao avaliacao = Avaliacao.fromJson(
+                snapshot.data as Map<String, dynamic>);
+            _idAvaliacao = avaliacao.id;
+            _selectedTipoAvaliacao = avaliacao.tipoDeAvaliacao;
+            _selectedMetodoEntrega = avaliacao.metodoDeEntrega;
+            nomeAvaliacaoController.text = avaliacao.name;
+            tipoAvaliacaoController.text = _selectedTipoAvaliacao;
+            unidadeCurricularController.text = _selectedUnidadeCurricular;
+            dataController.text = '${avaliacao.data} ${avaliacao.hora}';
+            metodoEntregaController.text = _selectedMetodoEntrega;
+            descricaoController.text = avaliacao.descricao;
+
+            init = true;
+          }
 
           return Scaffold(
               appBar: buildAppBar(context, 'Avaliações'),
@@ -136,7 +140,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
                             SizedBox(height: 40),
                             buildDescricaoAvaliacao(),
                             SizedBox(height: 40),
-                            buildBotaoCriarAvaliacao(context, avaliacao),
+                            buildBotaoCriarAvaliacao(context),
                           ],
                         )
                     ),
@@ -415,50 +419,44 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     );
   }
 
-  Container buildBotaoCriarAvaliacao(BuildContext context, Avaliacao avaliacao) {
+  Container buildBotaoCriarAvaliacao(BuildContext context) {
     return Container(
       width: _larguraTextFields,
       child: ElevatedButton(
         onPressed: () async {
           if (nomeAvaliacaoController.text.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text('O nome da avaliação não pode estar vazio!'),
               backgroundColor: Colors.red,
             ));
           } else if (metodoEntregaController.text.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text('O método de entrega não pode estar vazio!'),
               backgroundColor: Colors.red,
             ));
           } else if (tipoAvaliacaoController.text.isEmpty) {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
               content: Text('O tipo de avaliação não pode estar vazio!'),
               backgroundColor: Colors.red,
             ));
           } else {
             final ucId = await getUCId(unidadeCurricularController.text);
             await updateAvaliacao(toJson(ucId));
-            //Clear dos text fields
-            nomeAvaliacaoController.clear();
-            unidadeCurricularController.clear();
-            metodoEntregaController.clear();
-            descricaoController.clear();
-            tipoAvaliacaoController.clear();
-            dataController.clear();
 
             GoRouter.of(context).pop();
+
           }
         },
-        child: Text('Submeter',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
         style: ElevatedButton.styleFrom(
           backgroundColor: primary,
-          padding: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-          textStyle: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          textStyle: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(4),
           ),
         ),
+        child: const Text('Submeter',
+            style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
     );
   }
@@ -466,8 +464,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   Map<String, dynamic> toJson(int ucId) {
     final data = dataController.text.split(" ")[0];
     final hora = dataController.text.split(" ")[1];
-    final descrical = descricaoController.text;
-    print(descrical);
+    final descricao = descricaoController.text;
     return {
       'id': _idAvaliacao,
       'nome': nomeAvaliacaoController.text,
@@ -482,3 +479,5 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     };
   }
 }
+
+

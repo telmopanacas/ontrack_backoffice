@@ -328,6 +328,20 @@ Future<int> getUCId(String nomeUC) async {
   }
 }
 
+/*
+Função que vai buscar o nome da Unidade Curricular do professor com id X
+ */
+Future<String> getUCNome(String idUC) async {
+  var response = await http.get(Uri.parse(
+      '${_servidorOnTrackAPIEndpoint}/unidade_curricular/${idUC}'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body);
+    return jsonResponse['nome'];
+  } else {
+    print('Erro na função getUCNome no ficheiro api_requests.dart');
+    return '';
+  }
+}
 
 /*
 Função que vai buscar todos os alunos de uma Unidade Curricular
