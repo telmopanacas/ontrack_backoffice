@@ -243,7 +243,6 @@ Future<List<Widget>> getWidgetsAvaliacoesProfID(BuildContext context) async {
   2 - Ir a cada unidade curricular e obter as avaliações e meter numa lista
   3 - Chamar a função getHomeAvaliacoesWidgetFromJSON para cada avaliação
    */
-
   var unidadesCurricularesIds = [];
   var respostaUnidadesCurriculares = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProf/unidades-curriculares/list'));
 
@@ -256,8 +255,12 @@ Future<List<Widget>> getWidgetsAvaliacoesProfID(BuildContext context) async {
       var respostaAvaliacoes = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/${ucId}/avaliacoes/list'));
       if(respostaAvaliacoes.statusCode == 200) {
         var resultados = jsonDecode(respostaAvaliacoes.body) as List;
-        for(var avaliacao in resultados) {
-          avaliacoes.add(getHomeAvaliacoesWidgetFromJSON(context, avaliacao, Colors.white));
+        for(var avaliacaoJson in resultados) {
+          String dataAvaliacaoString = avaliacaoJson['data'];
+          DateFormat inputFormat = DateFormat("dd/MM/yyyy");
+          DateTime dataAvaliacao = inputFormat.parse(dataAvaliacaoString);
+          if(dataAvaliacao.isAfter(DateTime.now()))
+          avaliacoes.add(getHomeAvaliacoesWidgetFromJSON(context, avaliacaoJson, Colors.white));
         }
       }else {
         print('Erro ao obter as avaliações do professor na home page: ${respostaAvaliacoes.statusCode}.');
@@ -300,6 +303,21 @@ Future<List<String>> getNomesUnidadeCurriculares() async {
   } else {
     print('Erro na função getUCeIdMap no ficheiro api_requests.dart');
     return [];
+  }
+}
+
+Future<Map<String, String>> getNomesEIdUCs() async {
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/list'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body) as List;
+    Map<String, String> output = {};
+    jsonResponse.map((uc) {
+      output[uc['nome']] = uc['id'].toString();
+    }).toList();
+    return output;
+  } else {
+    print('Erro na função getUCeIdMap no ficheiro api_requests.dart');
+    return {};
   }
 }
 
@@ -360,5 +378,36 @@ Future<List<String>> getListaAlunosUC(int idUC) async {
   } else {
     print('Erro na função getListaAlunosUC no ficheiro api_requests.dart');
     return [];
+  }
+}
+
+/*
+Função que vai obter o número de unidades curriculares de um professor
+ */
+Future<int> getProfessorUcCount() async {
+  var idProf = await getUserID();
+  var response = await http.get(Uri.parse(
+      '${_servidorOnTrackAPIEndpoint}/professor/${idProf}/unidades-curriculares/list'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body) as List;
+    return jsonResponse.length;
+  } else {
+    print('Erro na função getProfessorUcCount no ficheiro api_requests.dart');
+    return -1;
+  }
+}
+
+Future <Map<String, int>> getCursos() async {
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/curso/list'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body) as List;
+    Map<String, int> output = {};
+    jsonResponse.map((curso) {
+      output[curso['nome']] = curso['id'];
+    }).toList();
+    return output;
+  } else {
+    print('Erro na função getCursos no ficheiro api_requests.dart');
+    return {};
   }
 }

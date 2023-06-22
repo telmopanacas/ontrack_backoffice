@@ -19,6 +19,19 @@ class DetalhesAvaliacaoMedium extends StatefulWidget {
 
 class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
 
+  var nomeUC = '';
+
+
+  @override
+  void initState() {
+
+    getJsonAvaliacao(widget.avaliacaoId.toString()).then((json) => {
+      setState(() {
+        nomeUC = json['unidadeCurricular']['nome'];
+      })
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -116,6 +129,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                                       TextButton(
                                         onPressed: () async {
                                           await deleteAvaliacao(int.parse(avaliacao.id));
+                                          Navigator.of(context).pop();
                                           GoRouter.of(context).pushReplacement('/avaliacoes');
                                         },
                                         child: Text('Eliminar'),
@@ -252,7 +266,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
                 text: 'Unidade Curricular: ',
                 style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
                 children: <TextSpan>[
-                  TextSpan(text: avaliacao.ucId, style: TextStyle(fontWeight: FontWeight.normal)),
+                  TextSpan(text: nomeUC, style: TextStyle(fontWeight: FontWeight.normal)),
                 ],
               ),
             ),

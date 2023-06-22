@@ -18,6 +18,9 @@ class EditarAvaliacaoMedium extends StatefulWidget {
 }
 
 class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
+  // bool usado para inicializar os campos com os dados da avaliação
+  var init = false;
+
   double _larguraTextFields = 400;
 
   String _idAvaliacao = '-1';
@@ -46,17 +49,24 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   List<String> _metodosEntrega = ['Moodle', 'Email', 'Presencial'];
   String _selectedMetodoEntrega = 'Moodle';
 
-  var init = false;
+  Map<String, String> nomesEIdsUnidadesCurriculares = {};
+
+
   void initState()  {
     super.initState();
     getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
+    }));
+
+    getNomesEIdUCs().then((value) => setState(() {
+      nomesEIdsUnidadesCurriculares = value;
     }));
   }
 
   @override
   Widget build(BuildContext context) {
     _selectedUnidadeCurricular = _unidadesCurriculares[0];
+    print(nomesEIdsUnidadesCurriculares);
 
     return FutureBuilder(
       future: getJsonAvaliacao(widget.avaliacaoId!),
@@ -69,6 +79,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
           if(!init) {
             Avaliacao avaliacao = Avaliacao.fromJson(
                 snapshot.data as Map<String, dynamic>);
+
             _idAvaliacao = avaliacao.id;
             _selectedTipoAvaliacao = avaliacao.tipoDeAvaliacao;
             _selectedMetodoEntrega = avaliacao.metodoDeEntrega;
@@ -442,6 +453,13 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
           } else {
             final ucId = await getUCId(unidadeCurricularController.text);
             await updateAvaliacao(toJson(ucId));
+
+            //Apagar o texto dos textfields
+            nomeAvaliacaoController.clear();
+            tipoAvaliacaoController.clear();
+            unidadeCurricularController.clear();
+            metodoEntregaController.clear();
+            descricaoController.clear();
 
             GoRouter.of(context).pop();
 

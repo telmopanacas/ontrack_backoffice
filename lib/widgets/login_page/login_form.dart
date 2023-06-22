@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ontrack_backoffice/helpers/persistencia_user.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
 import 'package:ontrack_backoffice/services/api_login.dart';
+import 'package:ontrack_backoffice/services/api_requests.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 import 'package:ontrack_backoffice/widgets/custom_text.dart';
 
@@ -57,15 +58,20 @@ class LoginForm extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: 132, vertical: 20)
             ),
             onPressed: () async {
-              var loginValue = await login(emailController.text);
+              /*
+              Verificar se o email é de professor ou aluno primeiro
+               */
+              var loginValue = await login(emailController.text, passwordController.text);
               if (loginValue > 0) {
-
-                await saveUserID(loginValue);
-
+                // Limpar os campos de texto
                 emailController.clear();
                 passwordController.clear();
 
+                // Guardar o id do utilizador
+                await saveUserID(loginValue);
+
                 GoRouter.of(context).push('/home');
+
               }else {
                 //TODO: Show error message
               }

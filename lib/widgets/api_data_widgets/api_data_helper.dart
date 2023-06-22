@@ -108,7 +108,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       text: 'Estado: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
-                        TextSpan(text: estado, style: TextStyle(fontWeight: FontWeight.normal, decoration: TextDecoration.underline)),
+                        TextSpan(text: estado, style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),

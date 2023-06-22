@@ -34,7 +34,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
     'Projeto',
     'Mini-Projeto',
     'Defesa',
-    'Teste',
+    'Frequência',
     'Mini-Teste',
     'Exame',
     'Apresentação'
@@ -50,13 +50,14 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
     super.initState();
     getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
+      _selectedUnidadeCurricular = _unidadesCurriculares[0];
+      nomeAvaliacaoController.clear();
     }));
   }
 
 
   @override
   Widget build(BuildContext context) {
-    _selectedUnidadeCurricular = _unidadesCurriculares[0];
     unidadeCurricularController.text = _selectedUnidadeCurricular;
     tipoAvaliacaoController.text = _selectedTipoAvaliacao;
     metodoEntregaController.text = _selectedMetodoEntrega;
