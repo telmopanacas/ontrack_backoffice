@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/models/Notificacao.dart';
+import 'package:ontrack_backoffice/models/UnidadeCurricular.dart';
 import 'dart:math' as math;
 
 import 'package:ontrack_backoffice/static/colors.dart';
@@ -139,6 +140,88 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
                       children: <TextSpan>[
                         TextSpan(text: json['unidadeCurricular']['nome'].toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                      ],
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget  getUCSelecionadasWidget (BuildContext context, UnidadeCurricular uc) {
+  double larguraCard = 190;
+  return InkWell(
+    onTap: () {
+
+    },
+    child: Container(
+      height: 150,
+      width: larguraCard,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          Container(
+            height: 40,
+            width: larguraCard,
+            decoration: BoxDecoration(
+              //TODO: Tornar cores fixas
+              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+            ),
+            child: Center(
+                child: Text(
+                  uc.nome,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                )
+            ),
+          ),
+          Container(
+            width: larguraCard,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(20,15,0,0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  RichText(
+                    text: TextSpan(
+                      text: 'Curso: ',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(text: uc.curso.codigo, style: TextStyle(fontWeight: FontWeight.normal)),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Ano Letivo: ',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(text: uc.anoLetivo.ano.toString(), style: TextStyle(fontWeight: FontWeight.normal)),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Semestre: ',
+                      style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                      children: <TextSpan>[
+                        TextSpan(text: uc.semestre.toString(), style: TextStyle(fontWeight: FontWeight.normal)),
                       ],
                     ),
                   ),
@@ -313,3 +396,4 @@ Widget getHomeAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic
     ),
   );
 }
+

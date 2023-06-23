@@ -6,10 +6,29 @@ import 'package:intl/intl.dart';
 import 'package:ontrack_backoffice/helpers/persistencia_user.dart';
 import 'package:ontrack_backoffice/models/Avaliacao.dart';
 import 'package:ontrack_backoffice/models/Notificacao.dart';
+import 'package:ontrack_backoffice/models/UnidadeCurricular.dart';
 
+
+import '../pages/adicionar_unidades_curriculares/adicionar_unidades_curriculares_medium.dart';
 import '../widgets/api_data_widgets/api_data_helper.dart';
 
 const _servidorOnTrackAPIEndpoint = 'http://localhost:8094/api/v1';
+
+Future<bool> addUCsProfessor(List<int> ucIds) async {
+  // Id do professor
+  var idProf = await getUserID();
+
+  for(int id in ucIds) {
+    var response = await http.post(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/${idProf}/unidades-curriculares/add/$id'));
+    if (response.statusCode == 200) {
+      print('Unidade curricular adicionada com sucesso.');
+    } else {
+      print('Request failed with status: ${response.statusCode}.');
+      return false;
+    }
+  }
+  return true;
+}
 
 Future<List<Map<String, dynamic>>> getJsonListEventosProfID(BuildContext context) async {
   // Id do professor
@@ -130,7 +149,6 @@ Future<Map<String, dynamic>> getJsonUC(String unidadeCurricularId) async {
     return {};
   }
 }
-
 
 Future<List<Widget>> getWidgetsUCsProf(BuildContext context) async {
   // Id do professor
@@ -286,8 +304,6 @@ Future<List<Widget>> getWidgetsEventosProfessorDiaX(BuildContext context, DateTi
   return output.cast<Widget>();
 }
 
-
-
 /*
 Função utilizada na página de criação de avaliações
  */
@@ -409,5 +425,23 @@ Future <Map<String, int>> getCursos() async {
   } else {
     print('Erro na função getCursos no ficheiro api_requests.dart');
     return {};
+  }
+}
+
+Future <List<Widget>> getUCsByCursoEAno(BuildContext context, int cursoId, int ano) async {
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/curso/${cursoId}/unidades-curriculares/list'));
+  if (response.statusCode == 200) {
+    var jsonResponse = jsonDecode(response.body) as List;
+    List<Widget> output = [];
+    jsonResponse.map((uc) {
+      if(uc['ano'] == ano){
+        UnidadeCurricular unidadeCurricular = UnidadeCurricular.fromJson(uc);
+        output.add(UCWidget(unidadeCurricular: unidadeCurricular));
+      }
+    }).toList();
+    return output;
+  } else {
+    print('Erro na função getUCsByCursoEAno no ficheiro api_requests.dart');
+    return [];
   }
 }

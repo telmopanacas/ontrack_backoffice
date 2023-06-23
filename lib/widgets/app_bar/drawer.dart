@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:ontrack_backoffice/controllers/login/login_form_controllers.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
+
+import '../../helpers/persistencia_user.dart';
 
 List<String> pages = ['Home', 'Unidades Curriculares', 'Avaliações', 'Notificações', 'Sair'];
 
@@ -55,25 +58,26 @@ ListTile buildDrawerItem(String page, BuildContext context) {
   return ListTile(
     leading: getIcon(page),
     title: Text(page),
-    onTap: () {
+    onTap: () async {
       switch (page) {
         case 'Home':
-          Navigator.pushReplacementNamed(context, '/home');
+          GoRouter.of(context).push('/home');
           break;
         case 'Unidades Curriculares':
-          Navigator.pushReplacementNamed(context, '/ucs');
+          GoRouter.of(context).push('/ucs');
           break;
         case 'Avaliações':
-          Navigator.pushReplacementNamed(context, '/avaliacoes');
+          GoRouter.of(context).push('/avaliacoes');
           break;
         case 'Notificações':
-          Navigator.pushReplacementNamed(context, '/notificacoes');
+          GoRouter.of(context).push('/notificacoes');
           break;
         case 'Sair':
-          Navigator.pushReplacementNamed(context, '/login');
+          await clearUserID();
+          GoRouter.of(context).push('/login');
           break;
         default:
-          Navigator.pushReplacementNamed(context, '/home');
+          GoRouter.of(context).push('/home');
       }
     },
   );
