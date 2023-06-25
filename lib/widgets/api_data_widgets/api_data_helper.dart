@@ -262,12 +262,15 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
             ),
             child: Center(
-                child: Text(
-                  json['nome'],
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 17,
-                    overflow: TextOverflow.ellipsis,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: Text(
+                    json['nome'],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 )
             ),

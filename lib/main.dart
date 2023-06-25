@@ -29,22 +29,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       title: 'OnTrack Backoffice',
-      /*
-      initialRoute: '/',
-      routes: {
-        '/': (context) => LoginPage(),
-        '/login': (context) => LoginPage(),
-        '/forgot_password': (context) => ForgotPasswordPage(),
-        '/home': (context) => HomeLayout(),
-        '/ucs': (context) => UnidadesCurricularesLayout(),
-        '/avaliacoes': (context) => AvaliacoesLayout(),
-        '/notificacoes': (context) => NotificacoesLayout(),
-        '/detalhes_ucs': (context) => DetalhesUnidadeCurricularLayout(),
-        '/criar_avaliacao': (context) => CriarAvaliacaoLayout(),
-        '/detalhes_avaliacao': (context) => DetalhesAvaliacaoLayout(),
-        '/editar_avaliacao' : (context) => EditarAvaliacaoLayout(),
-      },
-       */
       theme: ThemeData(
         primarySwatch: primarySwatch,
         scaffoldBackgroundColor: Colors.white,

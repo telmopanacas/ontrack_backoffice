@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ontrack_backoffice/controllers/login/login_form_controllers.dart';
+import 'package:ontrack_backoffice/services/api_login.dart';
 import 'package:ontrack_backoffice/static/colors.dart';
 
 import '../../helpers/persistencia_user.dart';
 
-List<String> pages = ['Home', 'Unidades Curriculares', 'Avaliações', 'Notificações', 'Sair'];
+List<String> pages = ['Home', 'Unidades Curriculares', 'Avaliações', 'Sair'];
 
 Drawer buildDrawer(BuildContext context) {
   return Drawer(
@@ -24,34 +25,66 @@ Drawer buildDrawer(BuildContext context) {
   );
 }
 
-Container buildProfile() {
-  return Container(
-    height: 130,
-    child: Row(
-      children: [
-        SizedBox(width: 20),
-        // Avatar
-        Container(
-          width: 70,
-          height: 70,
-          child: CircleAvatar(
-              backgroundImage: Image.asset('assets/images/chun-li.png').image
+Widget buildProfile() {
+  return DrawerProfile();
+}
+
+class DrawerProfile extends StatefulWidget {
+  const DrawerProfile({
+    super.key,
+  });
+
+  @override
+  State<DrawerProfile> createState() => _DrawerProfileState();
+}
+
+
+class _DrawerProfileState extends State<DrawerProfile> {
+  String emailProfessor = "p1234@ulusofona.pt";
+  String nomeProfessor = "Nome do Professor";
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 130,
+      child: Row(
+        children: [
+          SizedBox(width: 20),
+          // Avatar
+          Container(
+            width: 70,
+            height: 70,
+            child: CircleAvatar(
+                backgroundImage: Image.asset('assets/images/default_pfp.png').image,
+              backgroundColor: Colors.transparent,
+            ),
           ),
-        ),
-        SizedBox(width: 20),
-        // Name & Email
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Bem-Vindo,', style: TextStyle(fontSize: 15)),
-            Text('Nome do Professor',style: TextStyle(fontSize: 13)),
-            Text('${emailController.text.isNotEmpty ? emailController.text : 'Email do professor' }',style: TextStyle(fontSize: 13)),
-          ],
-        )
-      ],
-    ),
-  );
+          SizedBox(width: 20),
+          // Name & Email
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Bem-Vindo,', style: TextStyle(fontSize: 15)),
+              Text(nomeProfessor,style: TextStyle(fontSize: 13)),
+              Text(emailProfessor,style: TextStyle(fontSize: 13)),
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserEmail().then((value) => setState(() {
+      emailProfessor = value;
+    }));
+    getUserName().then((value) => setState(() {
+      nomeProfessor = value;
+    }));
+  }
 }
 
 ListTile buildDrawerItem(String page, BuildContext context) {

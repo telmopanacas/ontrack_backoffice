@@ -64,12 +64,11 @@ class LoginForm extends StatelessWidget {
               var loginValue = await login(emailController.text, passwordController.text);
               if (loginValue > 0) {
                 // Limpar os campos de texto
-                emailController.clear();
                 passwordController.clear();
 
                 // Guardar o id do utilizador
                 await saveUserID(loginValue);
-
+                await saveUserEmailENome(emailController.text, loginValue);
                 GoRouter.of(context).push('/home');
 
               }else {

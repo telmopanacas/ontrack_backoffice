@@ -32,6 +32,7 @@ AppBar buildAppBarAddUCs(BuildContext context) {
               InkWell(
                 onTap: () async {
                   await clearUserID();
+                  await clearUserEmail();
                   GoRouter.of(context).push('/login');
                 },
                 child: const Icon(

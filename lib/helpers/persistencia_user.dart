@@ -1,3 +1,4 @@
+import 'package:ontrack_backoffice/services/api_login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // Função para guardar o ID do user
@@ -18,4 +19,38 @@ Future<void> clearUserID() async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('userID');
 }
+
+Future<void> saveUserEmailENome(String userEmail, int userId) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('userEmail', userEmail);
+
+  getProfessorNome(userId).then((value) => {
+    prefs.setString('userName', value)
+  });
+}
+
+Future<String> getUserEmail() async {
+  final prefs = await SharedPreferences.getInstance();
+  final userEmail = prefs.getString('userEmail');
+  return userEmail ?? '';
+}
+
+Future<void> clearUserEmail() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove('userEmail');
+}
+
+Future<String> getUserName() async {
+  final prefs = await SharedPreferences.getInstance();
+  final userName = prefs.getString('userName');
+  return userName ?? '';
+}
+
+Future<void> clearUserName() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.remove('userName');
+}
+
+
+
 

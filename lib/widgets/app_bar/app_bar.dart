@@ -66,6 +66,7 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
                         fontSize: 16),
                   )
               ),
+              /*
               TextButton(
                   onPressed: (){
                     GoRouter.of(context).push('/notificacoes');
@@ -78,9 +79,11 @@ AppBar buildAppBar(BuildContext context, String pageTitle) {
                         fontSize: 16),
                   )
               ),
+               */
               InkWell(
                 onTap: () async {
                   await clearUserID();
+                  await clearUserEmail();
                   GoRouter.of(context).push('/login');
                 },
                 child: Icon(

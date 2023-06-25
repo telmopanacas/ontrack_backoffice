@@ -32,13 +32,13 @@ class _AdicionarUnidadesCurricularesMediumState extends State<AdicionarUnidadesC
   bool _3anoIsExpanded = true;
 
 
-
   @override
   void initState() {
     super.initState();
     getCursos().then((value) => {
       setState(() {
         _cursos = value;
+        print(_cursos);
         _cursoSelecionado = _cursos.keys.first;
       })
     });
