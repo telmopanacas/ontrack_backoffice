@@ -20,13 +20,12 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
 
 
   //TODO: Ir à API buscar as unidades curriculares
-  List<String> _unidadesCurriculares = [
-    'Matemática 1',
-    'Unidade Curricular 2',
-    'Unidade Curricular 3',
-    'Unidade Curricular 4',
-    'Unidade Curricular 5'
-  ];
+  Map<String, int> _unidadesCurriculares = {
+    'Unidade Curricular 1': 1,
+    'Unidade Curricular 2': 2,
+    'Unidade Curricular 3': 3,
+  };
+
   String _selectedUnidadeCurricular = '';
 
   //TODO: Ir à API buscar os tipos de avaliação
@@ -50,7 +49,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
     super.initState();
     getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
-      _selectedUnidadeCurricular = _unidadesCurriculares[0];
+      _selectedUnidadeCurricular = _unidadesCurriculares.keys.first;
       nomeAvaliacaoController.clear();
     }));
   }
@@ -261,7 +260,7 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButton2(
-                  items: _unidadesCurriculares.map((uc) =>
+                  items: _unidadesCurriculares.keys.map((uc) =>
                       DropdownMenuItem<String>(
                         value: uc,
                         child: Text(uc),
@@ -412,9 +411,9 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
             ));
           } else {
             //TODO: Enviar para a base de dados
-            String unidadeCurricular = unidadeCurricularController.text.split(' - ')[0].trim();
-            final ucId = await getUCId(unidadeCurricular);
-            await createAvaliacao(toJson(ucId));
+            String unidadeCurricular = unidadeCurricularController.text;
+            final ucId = _unidadesCurriculares[unidadeCurricular];
+            await createAvaliacao(toJson(ucId!));
 
             //Clear dos text fields
             nomeAvaliacaoController.clear();

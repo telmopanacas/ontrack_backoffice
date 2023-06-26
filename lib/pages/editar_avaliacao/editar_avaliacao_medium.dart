@@ -26,14 +26,13 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   String _idAvaliacao = '-1';
 
 
-  List<String> _unidadesCurriculares = [
-    'Unidade Curricular 1',
-    'Unidade Curricular 2',
-    'Unidade Curricular 3',
-    'Unidade Curricular 4',
-    'Unidade Curricular 5'
-  ];
-  String _selectedUnidadeCurricular = 'Unidade Curricular 1';
+  Map<String, int> _unidadesCurriculares = {
+    'Unidade Curricular 1': 1,
+    'Unidade Curricular 2': 2,
+    'Unidade Curricular 3': 3,
+  };
+
+  String _selectedUnidadeCurricular = '';
 
   List<String> _tiposAvaliacao = [
     'Projeto',
@@ -49,16 +48,14 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   List<String> _metodosEntrega = ['Moodle', 'Email', 'Presencial'];
   String _selectedMetodoEntrega = 'Moodle';
 
-  //Map<String, String> nomesEIdsUnidadesCurriculares = {};
-
 
   void initState()  {
     super.initState();
     getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
     }));
+
     getUCNomeFromAvaliacao(widget.avaliacaoId!).then((nome) => setState(() {
-      print(nome);
       _selectedUnidadeCurricular = nome;
     }));
   }
@@ -300,7 +297,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: DropdownButton2(
-                  items: _unidadesCurriculares.map((uc) =>
+                  items: _unidadesCurriculares.keys.map((uc) =>
                       DropdownMenuItem<String>(
                         value: uc,
                         child: Text(uc),
@@ -450,9 +447,9 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
               backgroundColor: Colors.red,
             ));
           } else {
-            String unidadeCurricular = unidadeCurricularController.text.split(' - ')[0].trim();
-            final ucId = await getUCId(unidadeCurricular);
-            await updateAvaliacao(toJson(ucId));
+            String unidadeCurricular = unidadeCurricularController.text;
+            final ucId = _unidadesCurriculares[unidadeCurricular];
+            await updateAvaliacao(toJson(ucId!));
 
             //Apagar o texto dos textfields
             nomeAvaliacaoController.clear();
