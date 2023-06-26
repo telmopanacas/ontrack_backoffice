@@ -82,7 +82,8 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
             width: larguraCard,
             decoration: BoxDecoration(
               //TODO: Tornar cores fixas
-              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+              //color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+              color: primarySwatch.withOpacity(0.8),
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
             ),
             child: Center(
@@ -92,6 +93,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                     fontWeight: FontWeight.bold,
                     fontSize: 17,
                     overflow: TextOverflow.ellipsis,
+                    color: Colors.white,
                   ),
                 )
             ),
@@ -99,7 +101,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
           Container(
             width: larguraCard,
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(20,15,0,0),
+              padding: const EdgeInsets.fromLTRB(20,15,20,0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,6 +137,7 @@ Widget getAvaliacoesWidgetFromJSON(BuildContext context, Map<String, dynamic> js
                   ),
                   SizedBox(height: 10,),
                   RichText(
+                    overflow: TextOverflow.ellipsis,
                     text: TextSpan(
                       text: 'UC: ',
                       style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -258,7 +261,7 @@ Widget getUCWidgetFromJSON(BuildContext context, Map<String, dynamic> json) {
             width: larguraCard,
             decoration: BoxDecoration(
               //TODO: Tornar cores fixas
-              color: Color((math.Random().nextDouble() * 0xFFFFFF).toInt()).withOpacity(1.0),
+              color: Color(0xFF+json['cor'].hashCode).withOpacity(0.6),
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
             ),
             child: Center(

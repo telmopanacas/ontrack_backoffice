@@ -33,7 +33,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     'Unidade Curricular 4',
     'Unidade Curricular 5'
   ];
-  String _selectedUnidadeCurricular = '';
+  String _selectedUnidadeCurricular = 'Unidade Curricular 1';
 
   List<String> _tiposAvaliacao = [
     'Projeto',
@@ -49,7 +49,7 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
   List<String> _metodosEntrega = ['Moodle', 'Email', 'Presencial'];
   String _selectedMetodoEntrega = 'Moodle';
 
-  Map<String, String> nomesEIdsUnidadesCurriculares = {};
+  //Map<String, String> nomesEIdsUnidadesCurriculares = {};
 
 
   void initState()  {
@@ -57,16 +57,15 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
     getNomesUnidadeCurriculares().then((value) => setState(() {
       _unidadesCurriculares = value;
     }));
-
-    getNomesEIdUCs().then((value) => setState(() {
-      nomesEIdsUnidadesCurriculares = value;
+    getUCNomeFromAvaliacao(widget.avaliacaoId!).then((nome) => setState(() {
+      print(nome);
+      _selectedUnidadeCurricular = nome;
     }));
   }
 
   @override
   Widget build(BuildContext context) {
-    _selectedUnidadeCurricular = _unidadesCurriculares[0];
-    print(nomesEIdsUnidadesCurriculares);
+    //_selectedUnidadeCurricular = _unidadesCurriculares[0];
 
     return FutureBuilder(
       future: getJsonAvaliacao(widget.avaliacaoId!),
@@ -451,7 +450,8 @@ class _EditarAvaliacaoMediumState extends State<EditarAvaliacaoMedium> {
               backgroundColor: Colors.red,
             ));
           } else {
-            final ucId = await getUCId(unidadeCurricularController.text);
+            String unidadeCurricular = unidadeCurricularController.text.split(' - ')[0].trim();
+            final ucId = await getUCId(unidadeCurricular);
             await updateAvaliacao(toJson(ucId));
 
             //Apagar o texto dos textfields

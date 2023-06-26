@@ -7,7 +7,6 @@ import 'package:ontrack_backoffice/pages/detalhes_unidade_curricular/detalhes_un
 import 'package:ontrack_backoffice/pages/editar_avaliacao/editar_avaliacao_layout.dart';
 import 'package:ontrack_backoffice/pages/home/home_layout.dart';
 import 'package:ontrack_backoffice/pages/login/forgot_password.dart';
-
 import 'package:ontrack_backoffice/pages/login/login_page.dart';
 import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_layout.dart';
 import 'package:ontrack_backoffice/pages/notificacoes/notificacoes_medium.dart';

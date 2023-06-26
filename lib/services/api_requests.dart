@@ -84,7 +84,7 @@ Future<List<Widget>> getWidgetNotificacoes(String order) async {
 }
 
 Future<bool> updateAvaliacao(Map<String, dynamic> avaliacao) async {
-
+  print(avaliacao);
   var params = "?nome=${avaliacao['nome']}&tipoDeAvaliacao=${avaliacao['tipoDeAvaliacao']}&metodoDeEntrega=${avaliacao['metodoDeEntrega']}&data=${avaliacao['data']}&hora=${avaliacao['hora']}&descricao=${avaliacao['descricao']}&unidadeCurricularId=${avaliacao['unidadeCurricular']['id']}";
   var response = await http.put(Uri.parse('${_servidorOnTrackAPIEndpoint}/avaliacao/${avaliacao['id']}${params}'));
   if (response.statusCode == 200) {
@@ -308,12 +308,14 @@ Future<List<Widget>> getWidgetsEventosProfessorDiaX(BuildContext context, DateTi
 Função utilizada na página de criação de avaliações
  */
 Future<List<String>> getNomesUnidadeCurriculares() async {
-  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/unidade_curricular/list'));
+  var idProfessor = await getUserID();
+
+  var response = await http.get(Uri.parse('${_servidorOnTrackAPIEndpoint}/professor/$idProfessor/unidades-curriculares/list'));
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body) as List;
     List<String> output = [];
     jsonResponse.map((uc) {
-      output.add(uc['nome']);
+      output.add("${uc['nome']} - ${uc['curso']['codigo']}");
     }).toList();
     return output;
   } else {
@@ -365,12 +367,12 @@ Future<int> getUCId(String nomeUC) async {
 /*
 Função que vai buscar o nome da Unidade Curricular do professor com id X
  */
-Future<String> getUCNome(String idUC) async {
+Future<String> getUCNomeFromAvaliacao(String avaliacaoId) async {
   var response = await http.get(Uri.parse(
-      '${_servidorOnTrackAPIEndpoint}/unidade_curricular/${idUC}'));
+      '${_servidorOnTrackAPIEndpoint}/avaliacao/${avaliacaoId}'));
   if (response.statusCode == 200) {
     var jsonResponse = jsonDecode(response.body);
-    return jsonResponse['nome'];
+    return jsonResponse['unidadeCurricular']['nome'] + ' - ' + jsonResponse['unidadeCurricular']['curso']['codigo'];
   } else {
     print('Erro na função getUCNome no ficheiro api_requests.dart');
     return '';

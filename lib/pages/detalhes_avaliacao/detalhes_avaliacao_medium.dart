@@ -27,7 +27,7 @@ class _DetalhesAvaliacaoMediumState extends State<DetalhesAvaliacaoMedium> {
 
     getJsonAvaliacao(widget.avaliacaoId.toString()).then((json) => {
       setState(() {
-        nomeUC = json['unidadeCurricular']['nome'];
+        nomeUC = json['unidadeCurricular']['nome'] + ' - ' + json['unidadeCurricular']['curso']['codigo'];
       })
     });
   }

@@ -412,7 +412,8 @@ class _CriarAvaliacaoMediumState extends State<CriarAvaliacaoMedium> {
             ));
           } else {
             //TODO: Enviar para a base de dados
-            final ucId = await getUCId(unidadeCurricularController.text);
+            String unidadeCurricular = unidadeCurricularController.text.split(' - ')[0].trim();
+            final ucId = await getUCId(unidadeCurricular);
             await createAvaliacao(toJson(ucId));
 
             //Clear dos text fields
