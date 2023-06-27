@@ -73,6 +73,26 @@ class LoginForm extends StatelessWidget {
 
               }else {
                 //TODO: Show error message
+                // loginVavlue pode ter valores entre -1 e -2, dependendo do valor mostrar um Snackbar com uma mensagem
+                switch (loginValue) {
+                  case -1:
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Center(child: Text('Email introduzido inválido', style: TextStyle(fontSize: 20))),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    break;
+
+                  case -2:
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Center(child: Text('O email introduzido não se encontra registado', style: TextStyle(fontSize: 20))),
+                        backgroundColor: Colors.red,
+                      ),
+                    );
+                    break;
+                }
               }
             },
             child: Text(

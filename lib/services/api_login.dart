@@ -25,10 +25,22 @@ Future<int> login(String email, String password) async {
 
     var jsonResponse = jsonDecode(response.body);
     return jsonResponse['id'];
-  } else {
 
+  } else {
     print('Request failed with status: ${response.statusCode}.');
-    return 0;
+    var jsonResponse = jsonDecode(response.body);
+
+    switch (jsonResponse['message']) {
+
+      case 'Email inválido':
+        print(jsonResponse['message']);
+        return -1;
+
+      // Email não encontrado
+      default:
+        print(jsonResponse['message']);
+        return -2;
+    }
   }
 }
 
