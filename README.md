@@ -1,6 +1,6 @@
 # TFC-DEISI272-OnTrack-Backoffice
 
-- **Aluno: Telmo Panaças, a22001972.**
+- Desenvolvido por: [Telmo Panaças](https://github.com/telmo-a22001972) e por [Rafael Paulo](https://github.com/rafaelpaulo22001810)
 
 - Este repositório destina-se apenas à componente de Backoffice do TFC-DEISI-272-Solução de registo de momentos de avaliação.
 
